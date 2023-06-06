@@ -35,6 +35,21 @@
     <string name="close">Close</string>
 
     <string name="label_back">Back</string>
-    <string name="quantity">Qty</string>
-    <string name="add_to_cart">ADD TO CART</string>
+    <string name="quantity">Cant</string>
+    <string name="add_to_cart">Agregar</string>
+
+    <!-- Cart -->
+    <string name="cart_order_header">Order (%1s)</string>
+    <plurals name="cart_order_count">
+        <item quantity="one">%1d item</item>
+        <item quantity="other">%1d items</item>
+    </plurals>
+    <string name="cart_summary_header">Resumen</string>
+    <string name="cart_subtotal_label">Subtotal</string>
+    <string name="cart_shipping_label">Delivery</string>
+    <string name="cart_total_label">Total</string>
+    <string name="cart_checkout">Procesar Orden</string>
+    <string name="cart_increase_error">There was an error and the quantity couldn\'t be increased. Please try again.</string>
+    <string name="cart_decrease_error">There was an error and the quantity couldn\'t be decreased. Please try again.</string>
+    <string name="label_remove">Remove item</string>
 </resources>

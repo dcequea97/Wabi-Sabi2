@@ -4,7 +4,10 @@ import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -18,12 +21,15 @@ import androidx.compose.material.icons.filled.Remove
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -35,13 +41,19 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.cequea.wabi_sabi.R
 import com.cequea.wabi_sabi.data.model.Product
+import com.cequea.wabi_sabi.ui.components.QuantitySelector
 import com.cequea.wabi_sabi.ui.components.WabiSabiDivider
+import com.cequea.wabi_sabi.ui.components.WabiSabiSurface
+import com.cequea.wabi_sabi.ui.components.buttons.WabiSabiButton
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 import com.cequea.wabi_sabi.ui.utils.formatPrice
+import java.time.DayOfWeek
+import java.time.LocalTime
 
 @Composable
 fun ProductItemScreen(
     idProduct: Long,
+    onAddToCartClick: () -> Unit,
     viewModel: ProductItemViewModel = hiltViewModel()
 ) {
     val product by viewModel.product.observeAsState()
@@ -101,12 +113,8 @@ fun ProductItemScreen(
                 modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
-                AddToCartButton(
-                    count = product!!.countInCart,
-                    onAddClick = { /* Add product to cart */ },
-                    onRemoveClick = { /* Remove product from cart */ },
-                    modifier = Modifier.padding(top = 16.dp)
-                )
+
+                CartBottomBar(viewModel, product!!, onAddToCartClick)
                 Text(
                     text = formatPrice(product!!.countInCart * product!!.price),
                     style = TextStyle(
@@ -121,37 +129,44 @@ fun ProductItemScreen(
 }
 
 @Composable
-fun AddToCartButton(
-    count: Int,
-    onAddClick: () -> Unit,
-    onRemoveClick: () -> Unit,
+private fun CartBottomBar(
+    viewModel: ProductItemViewModel,
+    product: Product,
+    onAddToCartClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(modifier = modifier) {
-        IconButton(
-            onClick = onRemoveClick,
-            modifier = Modifier.size(36.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Remove,
-                contentDescription = "Remove from cart"
-            )
-        }
-        Text(
-            text = count.toString(),
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-                .width(36.dp),
-            textAlign = TextAlign.Center
-        )
-        IconButton(
-            onClick = onAddClick,
-            modifier = Modifier.size(36.dp)
-        ) {
-            Icon(
-                imageVector = Icons.Default.Add,
-                contentDescription = "Add to cart"
-            )
+    val (count, updateCount) = remember { mutableStateOf(product.countInCart) }
+    WabiSabiSurface(modifier) {
+        Column {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .navigationBarsPadding()
+                    .then(Modifier.padding(24.dp))
+                    .heightIn(min = 56.dp)
+            ) {
+                QuantitySelector(
+                    count = count,
+                    decreaseItemCount = { if (count > 0) updateCount(count - 1) },
+                    increaseItemCount = { updateCount(count + 1) }
+                )
+                Spacer(Modifier.width(16.dp))
+                WabiSabiButton(
+                    onClick = {
+                        product.countInCart = count
+                        viewModel.addProductToCart(product = product)
+                        onAddToCartClick()},
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = stringResource(R.string.add_to_cart),
+                        modifier = Modifier.fillMaxWidth(),
+                        color = WabiSabiTheme.colors.textSecondary,
+                        textAlign = TextAlign.Center,
+                        maxLines = 1
+                    )
+                }
+            }
         }
     }
 }
@@ -160,16 +175,23 @@ fun AddToCartButton(
 @Preview("light theme", uiMode = Configuration.UI_MODE_NIGHT_NO, showSystemUi = true)
 @Composable
 fun PreviewProductItem(){
-    val product = Product(
+    val breakfastFoods = listOf("huevos revueltos", "panqueques", "tostadas", "café", "jugo de naranja")
+    val breakfastDescription = "El pack puede contener empanadas, cachitos, pan, o arepas, junto con: ${breakfastFoods.joinToString(separator = ", ")}"
+
+    val product =  Product(
         id = 1L,
         restaurantId = 1L,
-        description = "My Product Description",
-        categoryId = listOf(1,2,4,9),
-        name = "Cupcake",
-        imageUrl = "https://source.unsplash.com/pGM4sjt_BdQ",
-        price = 10.59,
+        name = "Pack de Desayuno",
+        imageUrl = "https://ejemplo.com/pack-de-desayuno.jpg",
+        price = 10.0,
+        description = breakfastDescription,
+        categoryId = listOf(2L),
+        countInCart = 0,
+        openingHours = LocalTime.of(6, 0),
+        closingHours = LocalTime.of(11, 0),
+        openingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)
     )
     WabiSabiTheme {
-        ProductItemScreen(1)
+        ProductItemScreen(1, {})
     }
 }

@@ -30,7 +30,7 @@ fun DeliveryTopAppBar(modifier: Modifier = Modifier) {
             elevation = 0.dp
         ) {
             Text(
-                text = "Delivery to 1600 Amphitheater Way",
+                text = "Delivery a Sabana Grande",
                 style = MaterialTheme.typography.subtitle1,
                 color = WabiSabiTheme.colors.textSecondary,
                 textAlign = TextAlign.Center,

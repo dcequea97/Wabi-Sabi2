@@ -17,6 +17,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.cequea.wabi_sabi.ui.components.DeliveryTopAppBar
 import com.cequea.wabi_sabi.ui.home.feed.FeedScreen
+import com.cequea.wabi_sabi.ui.home.feed.cart.CartScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.ProductItemScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.RestaurantDetailScreen
 import com.cequea.wabi_sabi.ui.navigations.BottomNavItem
@@ -50,7 +51,7 @@ fun HomeScreen(
 
                     addProductItem(navControllerHome)
 
-                    addCart()
+                    addCart(navControllerHome)
 
                     addProfile()
                 }
@@ -117,11 +118,19 @@ fun NavGraphBuilder.addSearch(
 }
 
 @ExperimentalAnimationApi
-fun NavGraphBuilder.addCart() {
+fun NavGraphBuilder.addCart(
+    navController: NavHostController
+) {
     composable(
         route = Destinations.Cart.route
     ) {
-        CartScreen()
+        CartScreen(
+            onProductClick = { id ->
+                navController.navigate(
+                    route = Destinations.ProductItem.route + "/${id}"
+                )
+            }
+        )
     }
 }
 
@@ -170,7 +179,8 @@ fun NavGraphBuilder.addProductItem(
         val idProduct = backStackEntry.arguments?.getLong("idProduct") ?: 0
 
         ProductItemScreen(
-            idProduct = idProduct
+            idProduct = idProduct,
+            onAddToCartClick = { navController.navigate(route = Destinations.Cart.route) }
         )
     }
 }

@@ -46,4 +46,22 @@ class ProductItemViewModel @Inject constructor(
         }
     }
 
+    fun addProductToCart(product: Product){
+        viewModelScope.launch {
+            _isLoading.value = true
+            when (val response = repository.addProductToCart(product)) {
+                is Resource.Success -> {
+                    _product.value = response.data!!
+                }
+
+                is Resource.Error -> {
+                    _loadError.value = response.message!!
+                }
+
+                is Resource.Loading -> TODO()
+            }
+            _isLoading.value = false
+        }
+    }
+
 }

@@ -1,6 +1,8 @@
 package com.cequea.wabi_sabi.data.model
 
 import androidx.compose.runtime.Immutable
+import java.time.DayOfWeek
+import java.time.LocalTime
 
 @Immutable
 data class Restaurant(
@@ -9,12 +11,10 @@ data class Restaurant(
     val backgroundImageUrl: String,
     val profileImageUrl: String,
     val tagline: String = "",
-    val openingHour: Long,
-    val closeHour: Long,
-    val workingDays: ArrayList<Int>,
+    val workingDays: Set<DayOfWeek>,
     val rating: Double = 4.5,
-    val pickupFirstTime: Int = 45,
-    val pickupSecondTime: Int = 60,
+    val openingHours: LocalTime,
+    val closingHours: LocalTime
 )
 
 data class RestaurantsCollection(
