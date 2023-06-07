@@ -17,7 +17,8 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.cequea.wabi_sabi.ui.components.DeliveryTopAppBar
 import com.cequea.wabi_sabi.ui.home.feed.FeedScreen
-import com.cequea.wabi_sabi.ui.home.feed.cart.CartScreen
+import com.cequea.wabi_sabi.ui.home.cart.CartScreen
+import com.cequea.wabi_sabi.ui.home.checkout.CheckoutScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.ProductItemScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.RestaurantDetailScreen
 import com.cequea.wabi_sabi.ui.navigations.BottomNavItem
@@ -129,8 +130,25 @@ fun NavGraphBuilder.addCart(
                 navController.navigate(
                     route = Destinations.ProductItem.route + "/${id}"
                 )
+            },
+            onProceedToCheckoutClick = {
+                navController.navigate(
+                    route = Destinations.Checkout.route
+                )
             }
         )
+    }
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addCheckout(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.Checkout.route
+    ) {
+
+        CheckoutScreen()
     }
 }
 

@@ -69,14 +69,20 @@ class FeedViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getAllFilters(repository: RestaurantRepository){
-        _filtersList.value = repository.getFilters()
-        _priceFiltersList.value = repository.getPriceFilters()
-        _categoryFiltersList.value = repository.getCategoryFilters()
-        _lifeStyleFiltersList.value = repository.getLifeStyleFilters()
-        val sortFilters = repository.getSortFilters()
-        _sortDefaultFiltersList.value = sortFilters[0].name
-        _sortFiltersList.value = sortFilters
+    private fun getAllFilters(repository: RestaurantRepository){
+        viewModelScope.launch {
+            _filtersList.value = repository.getFilters()
+            _priceFiltersList.value = repository.getPriceFilters()
+            _categoryFiltersList.value = repository.getCategoryFilters()
+            _lifeStyleFiltersList.value = repository.getLifeStyleFilters()
+            val sortFilters = repository.getSortFilters()
+            _sortDefaultFiltersList.value = sortFilters[0].name
+            _sortFiltersList.value = sortFilters
+        }
+    }
+
+    fun modifyFavorite(idRestaurant: Long){
 
     }
+
 }

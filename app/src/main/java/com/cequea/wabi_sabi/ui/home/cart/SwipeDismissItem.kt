@@ -1,4 +1,4 @@
-package com.cequea.wabi_sabi.ui.home.feed.cart
+package com.cequea.wabi_sabi.ui.home.cart
 
 
 import androidx.compose.animation.AnimatedVisibility

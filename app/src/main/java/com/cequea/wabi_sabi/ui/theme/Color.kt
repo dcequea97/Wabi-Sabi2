@@ -91,3 +91,51 @@ val FunctionalDarkGrey = Color(0xff2e2e2e)
 val red = Color(0xFFC20D0D)
 
 const val AlphaNearOpaque = 0.95f
+
+
+
+val wabiSabiPrincipal = Color(0xFFF25C05)
+val lighterWabiSabi = wabiSabiPrincipal.copy( 0.9f)
+val lightWabiSabi = wabiSabiPrincipal.copy(0.8f)
+val originalWabiSabi = wabiSabiPrincipal
+val darkWabiSabi = wabiSabiPrincipal.copy(0.6f)
+val darkerWabiSabi = wabiSabiPrincipal.copy(0.5f)
+
+
+val wabiSabiPrincipal2 = Color(0xFF57B312)
+val lighterWabiSabi2 = wabiSabiPrincipal2.copy(0.9f)
+val lightWabiSabi2 = wabiSabiPrincipal2.copy(0.8f)
+val originalWabiSabi2 = wabiSabiPrincipal2
+val darkWabiSabi2 = wabiSabiPrincipal2.copy(0.6f)
+val darkerWabiSabi2 = wabiSabiPrincipal2.copy(0.5f)
+
+
+val wabiSabiPrincipal3 = Color(0xFFBF1304)
+val lighterWabiSabi3 = wabiSabiPrincipal3.copy(0.9f)
+val lightWabiSabi3 = wabiSabiPrincipal3.copy(0.8f)
+val originalWabiSabi3 = wabiSabiPrincipal3
+val darkWabiSabi3 = wabiSabiPrincipal3.copy(0.6f)
+val darkerWabiSabi3 = wabiSabiPrincipal3.copy(0.5f)
+
+val wabiSabiSecondary = Color(0xFF00CAF5)
+val lighterWabiSabiSecondary = wabiSabiSecondary.copy(0.9f)
+val lightWabiSabiSecondary = wabiSabiSecondary.copy(0.8f)
+val originalWabiSabiSecondary = wabiSabiSecondary
+val darkWabiSabiSecondary = wabiSabiSecondary.copy(0.6f)
+val darkerWabiSabiSecondary = wabiSabiSecondary.copy(0.5f)
+
+
+val wabiSabiSecondary2 = Color(0xFFFFAE00)
+val lighterWabiSabiSecondary2 = wabiSabiSecondary2.copy(0.9f)
+val lightWabiSabiSecondary2 = wabiSabiSecondary2.copy(0.8f)
+val originalWabiSabiSecondary2 = wabiSabiSecondary2
+val darkWabiSabiSecondary2 = wabiSabiSecondary2.copy(0.6f)
+val darkerWabiSabiSecondary2 = wabiSabiSecondary2.copy(0.5f)
+
+
+val wabiSabiSecondary3 = Color(0xFF002FB3)
+val lighterWabiSabiSecondary3 = wabiSabiSecondary3.copy(0.9f)
+val lightWabiSabiSecondary3 = wabiSabiSecondary3.copy(0.8f)
+val originalWabiSabiSecondary3 = wabiSabiSecondary3
+val darkWabiSabiSecondary3 = wabiSabiSecondary3.copy(0.6f)
+val darkerWabiSabiSecondary3 = wabiSabiSecondary3.copy(0.5f)

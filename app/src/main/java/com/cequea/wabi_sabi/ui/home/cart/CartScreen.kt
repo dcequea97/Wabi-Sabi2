@@ -1,4 +1,4 @@
-package com.cequea.wabi_sabi.ui.home.feed.cart
+package com.cequea.wabi_sabi.ui.home.cart
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateDpAsState
@@ -64,6 +64,7 @@ import com.cequea.wabi_sabi.ui.utils.formatPrice
 @Composable
 fun CartScreen(
     onProductClick: (Long) -> Unit,
+    onProceedToCheckoutClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CartViewModel = hiltViewModel()
 ) {
@@ -75,6 +76,7 @@ fun CartScreen(
         increaseItemCount = viewModel::increaseItemCount,
         decreaseItemCount = viewModel::decreaseItemCount,
         onProductClick = onProductClick,
+        onProceedToCheckoutClick = onProceedToCheckoutClick,
         modifier = modifier
     )
 }
@@ -86,6 +88,7 @@ fun Cart(
     increaseItemCount: (Long) -> Unit,
     decreaseItemCount: (Long) -> Unit,
     onProductClick: (Long) -> Unit,
+    onProceedToCheckoutClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     WabiSabiSurface(modifier = modifier.fillMaxSize()) {
@@ -97,7 +100,7 @@ fun Cart(
                 decreaseItemCount = decreaseItemCount,
                 onProductClick = onProductClick
             )
-            CheckoutBar()
+            CheckoutBar(onProceedToCheckoutClick)
         }
     }
 }
@@ -417,7 +420,10 @@ fun SummaryItem(
 }
 
 @Composable
-private fun CheckoutBar(modifier: Modifier = Modifier) {
+private fun CheckoutBar(
+    onProceedToCheckoutClick: () -> Unit,
+    modifier: Modifier = Modifier)
+{
     Column(
         modifier.background(
             WabiSabiTheme.colors.uiBackground.copy(alpha = AlphaNearOpaque)
@@ -427,7 +433,7 @@ private fun CheckoutBar(modifier: Modifier = Modifier) {
         Row {
             Spacer(Modifier.weight(1f))
             WabiSabiButton(
-                onClick = { /* todo */ },
+                onClick = { onProceedToCheckoutClick() },
                 shape = RectangleShape,
                 modifier = Modifier
                     .padding(horizontal = 12.dp, vertical = 8.dp)

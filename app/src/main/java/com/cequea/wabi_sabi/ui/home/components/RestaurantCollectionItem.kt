@@ -72,6 +72,7 @@ private val gradientWidth
 fun RestaurantCollectionItems(
     restaurantCollection: RestaurantsCollection,
     onRestaurantClick: (Long) -> Unit,
+    onFavoriteClick: (Long) -> Unit,
     modifier: Modifier = Modifier,
     index: Int = 0,
     highlight: Boolean = true
@@ -108,9 +109,9 @@ fun RestaurantCollectionItems(
             }
         }
         if (highlight && restaurantCollection.type == CollectionType.Highlight) {
-            HighlightedRestaurants(index, restaurantCollection.restaurants, onRestaurantClick)
+            HighlightedRestaurants(index, restaurantCollection.restaurants, onRestaurantClick, onFavoriteClick)
         } else {
-            HighlightedRestaurants(index, restaurantCollection.restaurants, onRestaurantClick)
+            HighlightedRestaurants(index, restaurantCollection.restaurants, onRestaurantClick, onFavoriteClick)
         }
     }
 }
@@ -120,6 +121,7 @@ private fun HighlightedRestaurants(
     index: Int,
     restaurant: List<Restaurant>,
     onRestaurantClick: (Long) -> Unit,
+    onFavoriteClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val scroll = rememberScrollState(0)
@@ -140,6 +142,7 @@ private fun HighlightedRestaurants(
             HighlightRestaurantItem(
                 restaurant,
                 onRestaurantClick,
+                onFavoriteClick,
                 index,
                 gradient,
                 gradientWidth,
@@ -205,6 +208,7 @@ fun RestaurantItem(
 private fun HighlightRestaurantItem(
     restaurant: Restaurant,
     onRestaurantClick: (Long) -> Unit,
+    onFavoriteClick: (Long) -> Unit,
     index: Int,
     gradient: List<Color>,
     gradientWidth: Float,
@@ -243,6 +247,8 @@ private fun HighlightRestaurantItem(
                         .fillMaxWidth()
                         .align(Alignment.TopCenter)
                 )
+                //TODO()
+                //FavoriteIcon(onFavoriteClick(restaurant.id))
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,
@@ -275,7 +281,7 @@ private fun HighlightRestaurantItem(
                 color = WabiSabiTheme.colors.textSecondary,
                 modifier = Modifier.padding(start = 8.dp)
             )
-            RatingComposable(restaurant)
+            //RatingComposable(restaurant)
         }
     }
 }
@@ -349,6 +355,7 @@ fun RestaurantCardPreview() {
         HighlightRestaurantItem(
             restaurant = restaurant,
             onRestaurantClick = { },
+            onFavoriteClick = {},
             index = 0,
             gradient = WabiSabiTheme.colors.gradient6_1,
             gradientWidth = gradientWidth,
@@ -408,6 +415,7 @@ fun RestaurantCollectionCardPreview() {
                 ), "Destacados", CollectionType.Highlight
             ),
             onRestaurantClick = { },
+            onFavoriteClick = {},
             index = 0
         )
     }

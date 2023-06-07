@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -28,6 +29,9 @@ fun RoundedButton(
                 .width(280.dp)
                 .height(50.dp),
             onClick = onClick,
+            colors = ButtonDefaults.buttonColors(
+                backgroundColor = WabiSabiTheme.colors.brand
+            ),
             shape = RoundedCornerShape(50),
         ) {
             Text(
@@ -40,7 +44,7 @@ fun RoundedButton(
     } else {
         CircularProgressIndicator(
             modifier = Modifier.size(50.dp),
-            color = MaterialTheme.colors.primary,
+            color = WabiSabiTheme.colors.brand,
             strokeWidth = 6.dp
         )
     }

@@ -18,7 +18,7 @@ class RestaurantRepository @Inject constructor(
 ) {
     val rinconcito = Restaurant(
         id = 1L,
-        name = "La Panaderia del Pueblo",
+        name = "La Panaderia de Sabana Grande",
         backgroundImageUrl = "https://proingra.com/wp-content/uploads/2022/07/04-AGO-BRAHMAN-I.jpg",
         profileImageUrl = "https://thumbs.dreamstime.com/z/panader%C3%ADa-logo-dulce-simple-vector-plantilla-216470510.jpg",
         tagline = "El sabor de casa en cada pan",

@@ -8,6 +8,7 @@ sealed class Destinations(
     val route: String,
     val arguments: List<NamedNavArgument>
 ){
+
     object Login: Destinations("login", emptyList())
 
     object Register: Destinations("register", emptyList())
@@ -35,4 +36,6 @@ sealed class Destinations(
     object ProductItem: Destinations("product_item", listOf(
         navArgument("idProduct"){type = NavType.LongType}
     ))
+
+    object Checkout: Destinations("checkout", emptyList())
 }

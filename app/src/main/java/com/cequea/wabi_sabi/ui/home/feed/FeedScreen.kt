@@ -59,6 +59,7 @@ fun FeedScreen(
         sortDefaultFiltersList,
         sortFiltersList,
         onRestaurantClick,
+        onFavoriteClick =  {viewModel.modifyFavorite(it) },
         modifier
     )
 }
@@ -73,6 +74,7 @@ private fun Feed(
     sortDefaultFiltersList: String,
     sortFiltersList: List<Filter>,
     onRestaurantClick: (Long) -> Unit,
+    onFavoriteClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -86,7 +88,8 @@ private fun Feed(
                 lifeStyleFiltersList,
                 sortDefaultFiltersList,
                 sortFiltersList,
-                onRestaurantClick
+                onRestaurantClick,
+                onFavoriteClick,
             )
         }
     }
@@ -102,6 +105,7 @@ private fun RestaurantCollectionList(
     sortDefaultFiltersList: String,
     sortFiltersList: List<Filter>,
     onRestaurantClick: (Long) -> Unit,
+    onFavoriteClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var filtersVisible by rememberSaveable { mutableStateOf(false) }
@@ -115,6 +119,7 @@ private fun RestaurantCollectionList(
                 RestaurantCollectionItems(
                     restaurantCollection = restaurantCollections,
                     onRestaurantClick = onRestaurantClick,
+                    onFavoriteClick = onFavoriteClick,
                     index = index
                 )
             }
