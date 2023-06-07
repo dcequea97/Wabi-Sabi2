@@ -1,8 +1,9 @@
 package com.cequea.wabi_sabi.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material.Colors
 import androidx.compose.material3.ColorScheme
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
@@ -13,7 +14,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
-import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme.colors
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -86,8 +86,7 @@ fun WabiSabiTheme(
 
     ProvideWabiSabiColors(colors) {
         MaterialTheme(
-            colorScheme = if (darkTheme) darkColorScheme() else lightColorScheme(),
-            typography = Typography,
+            colors = if (darkTheme) lightColor() else lightColor(),
             shapes = Shapes,
             content = content
         )
@@ -276,6 +275,22 @@ private val LocalWabiSabiColors = staticCompositionLocalOf<WabiSabiColors> {
  * A Material [Colors] implementation which sets all colors to [debugColor] to discourage usage of
  * [MaterialTheme.colors] in preference to [WabiSabiTheme.colors].
  */
+
+fun lightColor() = Colors(
+    primary = wabiSabiPrincipal,
+    primaryVariant = wabiSabiPrincipal2,
+    secondary = wabiSabiSecondary,
+    secondaryVariant = wabiSabiSecondary2,
+    background = Color.White,
+    surface = wabiSabiSecondary3,
+    error = wabiSabiPrincipal3,
+    onPrimary = Color.Black,
+    onSecondary = Color.Black,
+    onBackground = wabiSabiSecondary2,
+    onSurface =  wabiSabiSecondary2,
+    onError = wabiSabiPrincipal3,
+    isLight = true
+)
 fun lightColorScheme(
     debugColor: Color = Color.Magenta
 ) = ColorScheme(
