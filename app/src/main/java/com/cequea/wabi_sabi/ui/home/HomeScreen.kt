@@ -21,6 +21,7 @@ import com.cequea.wabi_sabi.ui.home.cart.CartScreen
 import com.cequea.wabi_sabi.ui.home.checkout.CheckoutScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.ProductItemScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.RestaurantDetailScreen
+import com.cequea.wabi_sabi.ui.home.profile.ProfileScreen
 import com.cequea.wabi_sabi.ui.navigations.BottomNavItem
 import com.cequea.wabi_sabi.ui.navigations.BottomNavigationBar
 import com.cequea.wabi_sabi.ui.navigations.Destinations
@@ -157,7 +158,10 @@ fun NavGraphBuilder.addProfile() {
     composable(
         route = Destinations.Profile.route
     ) {
-        ProfileScreen()
+        ProfileScreen(
+            onAddressClicked = { TODO() },
+            onRegisterBusinessClicked = { TODO() }
+        )
     }
 }
 

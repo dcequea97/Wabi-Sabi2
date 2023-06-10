@@ -8,7 +8,6 @@ import com.cequea.wabi_sabi.data.model.CollectionType
 import com.cequea.wabi_sabi.data.model.Filter
 import com.cequea.wabi_sabi.data.model.Restaurant
 import com.cequea.wabi_sabi.data.model.RestaurantsCollection
-import com.cequea.wabi_sabi.data.network.RestaurantApiClient
 import com.cequea.wabi_sabi.util.Resource
 import java.time.DayOfWeek
 import java.time.LocalTime
@@ -25,7 +24,8 @@ class RestaurantRepository @Inject constructor(
         workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
         rating = 4.7,
         openingHours = LocalTime.of(6, 30),
-        closingHours = LocalTime.of(20, 30)
+        closingHours = LocalTime.of(20, 30),
+        isFavorite = true
     )
 
     val muralla = Restaurant(

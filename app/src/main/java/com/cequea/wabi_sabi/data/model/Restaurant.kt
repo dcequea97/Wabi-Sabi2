@@ -14,7 +14,8 @@ data class Restaurant(
     val workingDays: Set<DayOfWeek>,
     val rating: Double = 4.5,
     val openingHours: LocalTime,
-    val closingHours: LocalTime
+    val closingHours: LocalTime,
+    val isFavorite: Boolean = false
 )
 
 data class RestaurantsCollection(

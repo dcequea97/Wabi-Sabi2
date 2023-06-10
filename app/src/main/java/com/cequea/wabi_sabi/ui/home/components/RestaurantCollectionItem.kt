@@ -27,8 +27,11 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material.icons.outlined.ArrowForward
+import androidx.compose.material.icons.outlined.Favorite
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +52,6 @@ import com.cequea.wabi_sabi.R
 import com.cequea.wabi_sabi.data.model.CollectionType
 import com.cequea.wabi_sabi.data.model.Restaurant
 import com.cequea.wabi_sabi.data.model.RestaurantsCollection
-import com.cequea.wabi_sabi.ui.components.RatingComposable
 import com.cequea.wabi_sabi.ui.components.WabiSabiCard
 import com.cequea.wabi_sabi.ui.components.WabiSabiSurface
 import com.cequea.wabi_sabi.ui.components.mirroringIcon
@@ -247,8 +249,17 @@ private fun HighlightRestaurantItem(
                         .fillMaxWidth()
                         .align(Alignment.TopCenter)
                 )
-                //TODO()
-                //FavoriteIcon(onFavoriteClick(restaurant.id))
+                IconButton(
+                    onClick = { onFavoriteClick(restaurant.id) },
+                    modifier = Modifier.padding(8.dp).align(Alignment.TopEnd)
+                ) {
+                    val icon = if (restaurant.isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+                    Icon(
+                        imageVector = icon,
+                        tint = MaterialTheme.colors.primary,
+                        contentDescription = if (restaurant.isFavorite) "Remove from favorites" else "Add to favorites"
+                    )
+                }
                 Row(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.CenterVertically,

@@ -52,4 +52,10 @@
     <string name="cart_increase_error">There was an error and the quantity couldn\'t be increased. Please try again.</string>
     <string name="cart_decrease_error">There was an error and the quantity couldn\'t be decreased. Please try again.</string>
     <string name="label_remove">Remove item</string>
+
+    <!--  Profile  -->
+    <string name="your_profile">Perfil</string>
+    <string name="general">General</string>
+    <string name="directions">Direcciones</string>
+    <string name="register_business">Registrar tu negocio</string>
 </resources>
