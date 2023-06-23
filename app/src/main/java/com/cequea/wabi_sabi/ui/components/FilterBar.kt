@@ -33,7 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.Filter
+import com.cequea.wabi_sabi.ui.model.Filter
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 
 @Composable

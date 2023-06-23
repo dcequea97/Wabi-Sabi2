@@ -1,6 +1,7 @@
 package com.cequea.wabi_sabi.ui.home.cart
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -32,6 +33,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DeleteForever
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -51,7 +53,8 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.Product
+import com.cequea.wabi_sabi.ui.components.CircularIndeterminateProgressBar
+import com.cequea.wabi_sabi.ui.model.Product
 import com.cequea.wabi_sabi.ui.components.QuantitySelector
 import com.cequea.wabi_sabi.ui.components.WabiSabiDivider
 import com.cequea.wabi_sabi.ui.components.WabiSabiSurface
@@ -60,6 +63,8 @@ import com.cequea.wabi_sabi.ui.home.feed.details.ProductImage
 import com.cequea.wabi_sabi.ui.theme.AlphaNearOpaque
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 import com.cequea.wabi_sabi.ui.utils.formatPrice
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @Composable
 fun CartScreen(
@@ -68,8 +73,25 @@ fun CartScreen(
     modifier: Modifier = Modifier,
     viewModel: CartViewModel = hiltViewModel()
 ) {
+    val isLoading by remember(viewModel::isLoading)
+
+    // Call getCartProducts() to load the products
+    LaunchedEffect(true) {
+        viewModel.getCartProducts()
+    }
+
     val products by viewModel.products.collectAsState()
-    viewModel.getCartProducts()
+
+    val context = LocalContext.current
+
+    LaunchedEffect(viewModel.loadError) {
+        withContext(Dispatchers.Main) {
+            viewModel.loadError.collect { error ->
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     Cart(
         products = products,
         removeProduct = viewModel::removeProduct,
@@ -79,14 +101,16 @@ fun CartScreen(
         onProceedToCheckoutClick = onProceedToCheckoutClick,
         modifier = modifier
     )
+
+    CircularIndeterminateProgressBar(isDisplayed = isLoading)
 }
 
 @Composable
 fun Cart(
     products: List<Product>,
     removeProduct: (Long) -> Unit,
-    increaseItemCount: (Long) -> Unit,
-    decreaseItemCount: (Long) -> Unit,
+    increaseItemCount: (Long, Int) -> Unit,
+    decreaseItemCount: (Long, Int) -> Unit,
     onProductClick: (Long) -> Unit,
     onProceedToCheckoutClick: () -> Unit,
     modifier: Modifier = Modifier
@@ -109,8 +133,8 @@ fun Cart(
 private fun CartContent(
     products: List<Product>,
     removeProduct: (Long) -> Unit,
-    increaseItemCount: (Long) -> Unit,
-    decreaseItemCount: (Long) -> Unit,
+    increaseItemCount: (Long, Int) -> Unit,
+    decreaseItemCount: (Long, Int) -> Unit,
     onProductClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -240,8 +264,8 @@ private fun CartContent(
 fun CartItem(
     product: Product,
     removeProduct: (Long) -> Unit,
-    increaseItemCount: (Long) -> Unit,
-    decreaseItemCount: (Long) -> Unit,
+    increaseItemCount: (Long, Int) -> Unit,
+    decreaseItemCount: (Long, Int) -> Unit,
     onProductClick: (Long) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -334,8 +358,8 @@ fun CartItem(
         )
         QuantitySelector(
             count = product.countInCart,
-            decreaseItemCount = { decreaseItemCount(product.id) },
-            increaseItemCount = { increaseItemCount(product.id) },
+            decreaseItemCount = { decreaseItemCount(product.id, product.countInCart - 1) },
+            increaseItemCount = { increaseItemCount(product.id, product.countInCart + 1) },
             modifier = Modifier.constrainAs(quantity) {
                 baseline.linkTo(price.baseline)
                 end.linkTo(parent.end)

@@ -1,4 +1,4 @@
-package com.cequea.wabi_sabi.data.model
+package com.cequea.wabi_sabi.ui.model
 
 import androidx.compose.runtime.Immutable
 import java.time.DayOfWeek

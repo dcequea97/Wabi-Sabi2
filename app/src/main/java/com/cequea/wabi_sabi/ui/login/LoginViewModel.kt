@@ -6,11 +6,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cequea.wabi_sabi.R
+import com.cequea.wabi_sabi.core.isNotNull
+import com.cequea.wabi_sabi.data.repository.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel: ViewModel() {
+
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val repository: UserRepository
+): ViewModel() {
 
     val state: MutableState<LoginState> = mutableStateOf(LoginState())
 
@@ -30,12 +38,14 @@ class LoginViewModel: ViewModel() {
 
         viewModelScope.launch {
             state.value = state.value.copy(displayProgressBar = true)
-
-            delay(3000)
-
-            state.value = state.value.copy(email = email, password = password)
+            val response = repository.login(email, password)
+            if (response.data.isNotNull()){
+                state.value = state.value.copy(email = email, password = password)
+                state.value = state.value.copy(successLogin = true)
+            }
+            delay(2000)
             state.value = state.value.copy(displayProgressBar = false)
-            state.value = state.value.copy(successLogin = true)
+
         }
     }
 

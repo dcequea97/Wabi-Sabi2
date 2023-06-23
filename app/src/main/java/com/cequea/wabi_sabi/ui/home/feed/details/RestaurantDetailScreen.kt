@@ -61,8 +61,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.Product
-import com.cequea.wabi_sabi.data.model.Restaurant
+import com.cequea.wabi_sabi.ui.model.Product
+import com.cequea.wabi_sabi.ui.model.Restaurant
 import com.cequea.wabi_sabi.ui.components.QuantitySelector
 import com.cequea.wabi_sabi.ui.components.RatingComposable
 import com.cequea.wabi_sabi.ui.components.WabiSabiDivider

@@ -9,12 +9,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.statusBars
-import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
@@ -28,9 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.cequea.wabi_sabi.data.model.Filter
-import com.cequea.wabi_sabi.data.model.RestaurantsCollection
-import com.cequea.wabi_sabi.ui.components.FilterBar
+import com.cequea.wabi_sabi.ui.model.Filter
+import com.cequea.wabi_sabi.ui.model.RestaurantsCollection
 import com.cequea.wabi_sabi.ui.components.WabiSabiDivider
 import com.cequea.wabi_sabi.ui.components.WabiSabiSurface
 import com.cequea.wabi_sabi.ui.home.components.FilterScreen

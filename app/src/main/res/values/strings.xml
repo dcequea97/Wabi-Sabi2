@@ -58,4 +58,9 @@
     <string name="general">General</string>
     <string name="directions">Direcciones</string>
     <string name="register_business">Registrar tu negocio</string>
+
+
+    <string name="universal_error">Ha Ocurrido un Error</string>
+
+
 </resources>

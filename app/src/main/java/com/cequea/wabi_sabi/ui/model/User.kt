@@ -1,4 +1,4 @@
-package com.cequea.wabi_sabi.data.model
+package com.cequea.wabi_sabi.ui.model
 
 data class User(
     val id: Long,
@@ -7,7 +7,7 @@ data class User(
     val imageUrl: String,
     val email: String,
     val phone: String,
-    val addresses: List<Address>
+    val addresses: List<Address> = emptyList()
 )
 
 data class Address(

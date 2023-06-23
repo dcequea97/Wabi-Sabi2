@@ -49,9 +49,9 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.CollectionType
-import com.cequea.wabi_sabi.data.model.Restaurant
-import com.cequea.wabi_sabi.data.model.RestaurantsCollection
+import com.cequea.wabi_sabi.ui.model.CollectionType
+import com.cequea.wabi_sabi.ui.model.Restaurant
+import com.cequea.wabi_sabi.ui.model.RestaurantsCollection
 import com.cequea.wabi_sabi.ui.components.WabiSabiCard
 import com.cequea.wabi_sabi.ui.components.WabiSabiSurface
 import com.cequea.wabi_sabi.ui.components.mirroringIcon

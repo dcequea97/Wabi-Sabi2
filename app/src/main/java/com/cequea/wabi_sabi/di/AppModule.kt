@@ -1,7 +1,8 @@
 package com.cequea.wabi_sabi.di
 
-import com.cequea.wabi_sabi.data.network.RestaurantApiClient
-import com.cequea.wabi_sabi.data.repository.RestaurantRepository
+import com.cequea.wabi_sabi.data.network.apiclients.ProductApiClient
+import com.cequea.wabi_sabi.data.network.apiclients.RestaurantApiClient
+import com.cequea.wabi_sabi.data.network.apiclients.UserApiClient
 import com.cequea.wabi_sabi.util.Interceptor
 import dagger.Module
 import dagger.Provides
@@ -20,9 +21,9 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit {
-        val myIp = "192.168.0.103"
+        val myIp = "192.168.0.102"
         return Retrofit.Builder()
-            .baseUrl("http://$myIp:8000/api/")
+            .baseUrl("http://$myIp:5000/api/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(getClient())
             .build()
@@ -41,5 +42,17 @@ object AppModule {
     @Provides
     fun provideRestaurantApiClient(retrofit: Retrofit): RestaurantApiClient {
         return retrofit.create(RestaurantApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserApiClient(retrofit: Retrofit): UserApiClient{
+        return retrofit.create(UserApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideProductApiClient(retrofit: Retrofit): ProductApiClient {
+        return retrofit.create(ProductApiClient::class.java)
     }
 }

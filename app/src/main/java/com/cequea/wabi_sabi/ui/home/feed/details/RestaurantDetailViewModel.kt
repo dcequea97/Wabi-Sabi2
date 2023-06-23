@@ -2,10 +2,8 @@ package com.cequea.wabi_sabi.ui.home.feed.details
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cequea.wabi_sabi.data.model.Filter
-import com.cequea.wabi_sabi.data.model.Product
-import com.cequea.wabi_sabi.data.model.Restaurant
-import com.cequea.wabi_sabi.data.model.RestaurantsCollection
+import com.cequea.wabi_sabi.ui.model.Product
+import com.cequea.wabi_sabi.ui.model.Restaurant
 import com.cequea.wabi_sabi.data.repository.ProductRepository
 import com.cequea.wabi_sabi.data.repository.RestaurantRepository
 import com.cequea.wabi_sabi.util.Resource

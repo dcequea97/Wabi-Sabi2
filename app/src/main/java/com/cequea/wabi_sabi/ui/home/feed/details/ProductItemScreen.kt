@@ -40,7 +40,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.Product
+import com.cequea.wabi_sabi.ui.model.Product
 import com.cequea.wabi_sabi.ui.components.QuantitySelector
 import com.cequea.wabi_sabi.ui.components.WabiSabiDivider
 import com.cequea.wabi_sabi.ui.components.WabiSabiSurface
@@ -57,6 +57,12 @@ fun ProductItemScreen(
     viewModel: ProductItemViewModel = hiltViewModel()
 ) {
     val product by viewModel.product.observeAsState()
+    val isRegisteredSuccess by viewModel.isRegisteredSuccess.observeAsState()
+
+    if(isRegisteredSuccess == true){
+        onAddToCartClick()
+    }
+
     viewModel.getProductById(idProduct)
     if (product != null) {
         Column(
@@ -78,7 +84,9 @@ fun ProductItemScreen(
                 contentScale = ContentScale.Crop,
             )
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
@@ -110,11 +118,13 @@ fun ProductItemScreen(
             )
 
             Row(
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
 
-                CartBottomBar(viewModel, product!!, onAddToCartClick)
+                CartBottomBar(viewModel, product!!)
                 Text(
                     text = formatPrice(product!!.countInCart * product!!.price),
                     style = TextStyle(
@@ -132,7 +142,6 @@ fun ProductItemScreen(
 private fun CartBottomBar(
     viewModel: ProductItemViewModel,
     product: Product,
-    onAddToCartClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val (count, updateCount) = remember { mutableStateOf(product.countInCart) }
@@ -154,8 +163,7 @@ private fun CartBottomBar(
                 WabiSabiButton(
                     onClick = {
                         product.countInCart = count
-                        viewModel.addProductToCart(product = product)
-                        onAddToCartClick()},
+                        viewModel.addProductToCart(product = product)},
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(

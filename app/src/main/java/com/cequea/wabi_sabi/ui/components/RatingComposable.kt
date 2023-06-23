@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.Restaurant
+import com.cequea.wabi_sabi.ui.model.Restaurant
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 
 @Composable

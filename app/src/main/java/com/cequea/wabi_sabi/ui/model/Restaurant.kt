@@ -1,4 +1,4 @@
-package com.cequea.wabi_sabi.data.model
+package com.cequea.wabi_sabi.ui.model
 
 import androidx.compose.runtime.Immutable
 import java.time.DayOfWeek
@@ -15,7 +15,8 @@ data class Restaurant(
     val rating: Double = 4.5,
     val openingHours: LocalTime,
     val closingHours: LocalTime,
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
+    val isHighlight: Boolean = false
 )
 
 data class RestaurantsCollection(

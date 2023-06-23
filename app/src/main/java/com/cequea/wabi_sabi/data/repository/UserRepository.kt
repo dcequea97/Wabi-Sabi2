@@ -1,16 +1,21 @@
 package com.cequea.wabi_sabi.data.repository
 
+import com.cequea.wabi_sabi.core.isNotNull
 import com.cequea.wabi_sabi.core.isNullOrEmpty
-import com.cequea.wabi_sabi.data.model.Address
-import com.cequea.wabi_sabi.data.model.LoginResponse
-import com.cequea.wabi_sabi.data.model.User
+import com.cequea.wabi_sabi.ui.model.Address
+import com.cequea.wabi_sabi.data.model.responses.LoginResponse
+import com.cequea.wabi_sabi.data.model.responses.toDomain
+import com.cequea.wabi_sabi.ui.model.User
 import com.cequea.wabi_sabi.data.network.services.UserService
+import com.cequea.wabi_sabi.data.repository.datastore.DataStoreRepository
+import com.cequea.wabi_sabi.data.repository.datastore.toDataStore
 import com.cequea.wabi_sabi.util.Resource
 import javax.inject.Inject
 
 
 class UserRepository @Inject constructor(
-    private val api: UserService
+    private val api: UserService,
+    private val dataStore: DataStoreRepository
 ) {
 
     suspend fun getUser(): Resource<User> {
@@ -20,17 +25,30 @@ class UserRepository @Inject constructor(
     }
 
     suspend fun login(email: String, password: String): Resource<LoginResponse> {
-        //saveToken(response?.token)
         val response = api.login(email, password)
+        saveToken(response?.token)
+        saveUser(response?.data?.toDomain())
         return if (response.isNullOrEmpty()){
             Resource.Error(
-                message = "Ha ocurrido un error"
+                message = "Ha ocurrido un error",
+                data = null
             )
         }else{
             Resource.Success(
-                response!!
+                data = response!!
             )
 
+        }
+    }
+
+    private suspend fun saveToken(token: String?) {
+        if (token.isNotNull()) {
+            dataStore.saveToken(token!!)
+        }
+    }
+    private suspend fun saveUser(user: User?) {
+        if (user.isNotNull()) {
+            dataStore.saveUser(user!!.toDataStore())
         }
     }
 

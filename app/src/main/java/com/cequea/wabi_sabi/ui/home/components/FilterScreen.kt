@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.cequea.wabi_sabi.R
-import com.cequea.wabi_sabi.data.model.Filter
+import com.cequea.wabi_sabi.ui.model.Filter
 import com.cequea.wabi_sabi.ui.components.FilterChip
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
