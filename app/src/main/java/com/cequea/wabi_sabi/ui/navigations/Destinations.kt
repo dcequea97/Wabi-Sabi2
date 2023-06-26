@@ -29,6 +29,8 @@ sealed class Destinations(
 
     object Profile: Destinations("profile", emptyList())
 
+    object Address: Destinations("address", emptyList())
+
     object RestaurantDetail: Destinations("restaurant_detail", listOf(
         navArgument("restaurantId"){ type = NavType.LongType },
     ))

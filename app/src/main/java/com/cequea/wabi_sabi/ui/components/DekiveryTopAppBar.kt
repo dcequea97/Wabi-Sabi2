@@ -22,7 +22,7 @@ import com.cequea.wabi_sabi.R
 import com.cequea.wabi_sabi.ui.theme.AlphaNearOpaque
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 @Composable
-fun DeliveryTopAppBar(modifier: Modifier = Modifier) {
+fun DeliveryTopAppBar(modifier: Modifier = Modifier, address: String) {
     Column(modifier = modifier.statusBarsPadding()) {
         TopAppBar(
             backgroundColor = WabiSabiTheme.colors.uiBackground.copy(alpha = AlphaNearOpaque),
@@ -30,7 +30,7 @@ fun DeliveryTopAppBar(modifier: Modifier = Modifier) {
             elevation = 0.dp
         ) {
             Text(
-                text = "Delivery a Sabana Grande",
+                text = address,
                 style = MaterialTheme.typography.subtitle1,
                 color = WabiSabiTheme.colors.textSecondary,
                 textAlign = TextAlign.Center,
@@ -61,6 +61,6 @@ fun DeliveryTopAppBar(modifier: Modifier = Modifier) {
 @Composable
 fun PreviewDestinationBar() {
     WabiSabiTheme {
-        DeliveryTopAppBar()
+        DeliveryTopAppBar(address = "Delivery a Sabana Grande")
     }
 }

@@ -25,6 +25,8 @@ class DataStoreRepository(private val context: Context) : Abstract {
         val phone = stringPreferencesKey("PHONE")
         val imageUrl = stringPreferencesKey("IMAGE_URL")
 
+        val defaultAddress = stringPreferencesKey("DEFAULT_ADDRESS")
+
         val token = stringPreferencesKey("TOKEN")
     }
 
@@ -59,6 +61,18 @@ class DataStoreRepository(private val context: Context) : Abstract {
     override suspend fun getToken(): Flow<String> {
         return context.datastore.data.map {
             it[token]!!
+        }
+    }
+
+    override suspend fun saveAddress(newAddress: String) {
+        context.datastore.edit {
+            it[defaultAddress] = newAddress
+        }
+    }
+
+    override suspend fun getAddress(): Flow<String> {
+        return context.datastore.data.map {
+            it[defaultAddress]!!
         }
     }
 }

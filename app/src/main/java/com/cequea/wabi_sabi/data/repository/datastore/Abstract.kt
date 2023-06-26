@@ -10,4 +10,8 @@ interface Abstract {
     suspend fun saveToken(newToken: String)
 
     suspend fun getToken():Flow<String>
+
+    suspend fun saveAddress(newAddress: String)
+
+    suspend fun  getAddress(): Flow<String>
 }

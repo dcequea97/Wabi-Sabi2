@@ -183,22 +183,6 @@ private fun CartBottomBar(
 @Preview("light theme", uiMode = Configuration.UI_MODE_NIGHT_NO, showSystemUi = true)
 @Composable
 fun PreviewProductItem(){
-    val breakfastFoods = listOf("huevos revueltos", "panqueques", "tostadas", "café", "jugo de naranja")
-    val breakfastDescription = "El pack puede contener empanadas, cachitos, pan, o arepas, junto con: ${breakfastFoods.joinToString(separator = ", ")}"
-
-    val product =  Product(
-        id = 1L,
-        restaurantId = 1L,
-        name = "Pack de Desayuno",
-        imageUrl = "https://ejemplo.com/pack-de-desayuno.jpg",
-        price = 10.0,
-        description = breakfastDescription,
-        categoryId = listOf(2L),
-        countInCart = 0,
-        openingHours = LocalTime.of(6, 0),
-        closingHours = LocalTime.of(11, 0),
-        openingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY)
-    )
     WabiSabiTheme {
         ProductItemScreen(1, {})
     }

@@ -6,6 +6,10 @@ fun getOpeningString(open: LocalTime, close: LocalTime): String {
     return "Abierto entre las ${open.formatToTwoDigits()} y las ${close.formatToTwoDigits()}"
 }
 
+fun getProductsHours(open: LocalTime, close: LocalTime): String {
+    return "Disponible entre las ${open.formatToTwoDigits()} y las ${close.formatToTwoDigits()}"
+}
+
 fun LocalTime.formatToTwoDigits(): String {
     val hourFormatted = if (this.hour.toString().length < 2) {
         "0${this.hour}"

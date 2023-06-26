@@ -1,8 +1,10 @@
 package com.cequea.wabi_sabi.data.network.services
 
 import com.cequea.wabi_sabi.data.model.responses.LoginResponse
+import com.cequea.wabi_sabi.data.model.toDomain
 import com.cequea.wabi_sabi.data.network.SafeApiCall
 import com.cequea.wabi_sabi.data.network.apiclients.UserApiClient
+import com.cequea.wabi_sabi.ui.model.User
 import com.google.gson.JsonObject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -44,6 +46,17 @@ class UserService @Inject constructor(
                 null
             }else{
                 apiCall.body
+            }
+        }
+    }
+
+    suspend fun getUserByEmail(email: String): User? {
+        return withContext(Dispatchers.IO) {
+            val apiCall = safeApiCall.safeCall { api.getUserByEmail(email) }
+            return@withContext if (apiCall.failed || !apiCall.isSuccessful) {
+                null
+            } else {
+                apiCall.body.user.toDomain()
             }
         }
     }

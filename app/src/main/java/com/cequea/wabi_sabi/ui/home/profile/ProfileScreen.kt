@@ -1,6 +1,7 @@
 package com.cequea.wabi_sabi.ui.home.profile
 
-import androidx.compose.foundation.layout.Box
+
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.foundation.clickable
@@ -13,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.KeyboardArrowRight
@@ -29,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
@@ -38,11 +39,13 @@ import com.cequea.wabi_sabi.R
 import com.cequea.wabi_sabi.ui.components.buttons.DrawableButton
 import com.cequea.wabi_sabi.ui.components.buttons.IconButton
 import com.cequea.wabi_sabi.ui.theme.Dimension
+import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 
 @Composable
 fun ProfileScreen(
     onAddressClicked: () -> Unit,
     onRegisterBusinessClicked: () -> Unit,
+    onLogoutClicked: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     viewModel.getUser()
@@ -93,6 +96,16 @@ fun ProfileScreen(
                 title = R.string.register_business,
                 onOptionClicked = {
                     onRegisterBusinessClicked()
+                },
+            )
+        }
+
+        item {
+            ProfileOptionItem(
+                icon = R.drawable.baseline_logout_24,
+                title = R.string.logout,
+                onOptionClicked = {
+                    onLogoutClicked()
                 },
             )
         }
@@ -147,16 +160,18 @@ fun ProfileHeaderSection(imageUrl: String?, name: String?, email: String?, phone
         horizontalArrangement = Arrangement.spacedBy(Dimension.pagePadding),
     ) {
         AsyncImage(
-            modifier = Modifier
-                .size(Dimension.xlIcon)
-                .clip(CircleShape),
             model = ImageRequest.Builder(LocalContext.current)
                 .data(imageUrl)
                 .crossfade(true)
                 .build(),
-            contentDescription = null,
+            contentDescription = "User image",
+            placeholder = painterResource(R.drawable.placeholder_logo),
             contentScale = ContentScale.Crop,
-            placeholder = painterResource(id = R.drawable.user_placeholder)
+            modifier = Modifier
+                .size(82.dp)
+                .clip(CircleShape)
+                .border(2.dp, Color.Gray, CircleShape)
+
         )
 
         Column {
@@ -175,5 +190,17 @@ fun ProfileHeaderSection(imageUrl: String?, name: String?, email: String?, phone
                     .copy(fontWeight = FontWeight.Medium),
             )
         }
+    }
+}
+
+@Preview
+@Composable
+fun ProfileScreenPreview(){
+    WabiSabiTheme {
+        ProfileScreen(
+            onAddressClicked = { },
+            onRegisterBusinessClicked = { },
+            onLogoutClicked = { }
+        )
     }
 }

@@ -53,11 +53,22 @@
     <string name="cart_decrease_error">There was an error and the quantity couldn\'t be decreased. Please try again.</string>
     <string name="label_remove">Remove item</string>
 
+    <!--  Address  -->
+    <string name="address_name">Nombre (Casa, Trabajo…)</string>
+    <string name="address_detail">Direccion Exacta</string>
+    <string name="state">Estado</string>
+    <string name="add_address">Agregar Direccion</string>
+    <string name="city">Ciudad</string>
+    <string name="reference_point">Punto de Referencia</string>
+
+
+
     <!--  Profile  -->
     <string name="your_profile">Perfil</string>
     <string name="general">General</string>
     <string name="directions">Direcciones</string>
     <string name="register_business">Registrar tu negocio</string>
+    <string name="logout">Cerrar Sesion</string>
 
 
     <string name="universal_error">Ha Ocurrido un Error</string>

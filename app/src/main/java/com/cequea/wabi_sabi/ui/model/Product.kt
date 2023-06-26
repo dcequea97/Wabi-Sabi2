@@ -16,5 +16,6 @@ data class Product(
     var countInCart: Int = 0,
     val openingHours: LocalTime,
     val closingHours: LocalTime,
-    val openingDays: Set<DayOfWeek>
+    val openingDays: Set<DayOfWeek>,
+    val productsQuantity: Int
 )

@@ -1,6 +1,5 @@
 package com.cequea.wabi_sabi.ui.home.cart
 
-import android.content.Context
 import android.widget.Toast
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState

@@ -72,6 +72,7 @@ import com.cequea.wabi_sabi.ui.components.mirroringBackIcon
 import com.cequea.wabi_sabi.ui.theme.Neutral8
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 import com.cequea.wabi_sabi.ui.utils.formatPrice
+import com.cequea.wabi_sabi.ui.utils.getProductsHours
 import kotlin.math.max
 import kotlin.math.min
 
@@ -104,7 +105,8 @@ fun RestaurantDetailScreen(
         Body(
             products = products,
             scroll = scroll,
-            onProductClick =  onProductClick )
+            onProductClick = onProductClick
+        )
         Title(restaurant) { scroll.value }
         Image(restaurant.profileImageUrl) { scroll.value }
         Up(upPress)
@@ -191,19 +193,19 @@ private fun Body(
 private fun ProductItem(product: Product, onProductClick: () -> Unit) {
     Box(
         modifier = Modifier
-            .height(100.dp)
+            .height(130.dp)
             .fillMaxWidth()
             .padding(10.dp)
     ) {
         ConstraintLayout(
             modifier = Modifier
-                .height(100.dp)
+                .height(130.dp)
                 .fillMaxSize()
                 .clickable(
                     onClick = onProductClick,
                 )
         ) {
-            val (name, description, price, image) = createRefs()
+            val (name, description, price, image, hours, quantities) = createRefs()
 
             Text(
                 text = product.name,
@@ -220,6 +222,7 @@ private fun ProductItem(product: Product, onProductClick: () -> Unit) {
                         end.linkTo(image.start, margin = 10.dp)
                     }
             )
+
             Text(
                 text = product.description,
                 maxLines = 2,
@@ -235,11 +238,30 @@ private fun ProductItem(product: Product, onProductClick: () -> Unit) {
                         width = Dimension.fillToConstraints
                     }
                     .fillMaxWidth())
+
             Text(text = formatPrice(product.price), modifier = Modifier.constrainAs(price) {
                 top.linkTo((description.bottom))
-                bottom.linkTo(parent.bottom)
+                bottom.linkTo(quantities.top)
                 start.linkTo(name.start)
             })
+
+            Text(
+                text = "Cantidad de Productos: ${product.productsQuantity}",
+                color = Color.Blue,
+                modifier = Modifier.constrainAs(quantities) {
+                    top.linkTo((price.bottom))
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(name.start)
+                })
+
+            Text(
+                text = getProductsHours(product.openingHours, product.closingHours),
+                modifier = Modifier.constrainAs(hours) {
+                    top.linkTo((quantities.bottom))
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(name.start)
+                })
+
             ProductImageItem(
                 imageUrl = product.imageUrl,
                 contentDescription = null,
@@ -252,7 +274,7 @@ private fun ProductItem(product: Product, onProductClick: () -> Unit) {
             )
 
             createHorizontalChain(name, image, chainStyle = ChainStyle.SpreadInside)
-            createVerticalChain(name, description, price, chainStyle = ChainStyle.SpreadInside)
+            createVerticalChain(name, description, price, quantities, hours, chainStyle = ChainStyle.SpreadInside)
         }
     }
 

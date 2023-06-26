@@ -10,8 +10,4 @@ data class User(
     val addresses: List<Address> = emptyList()
 )
 
-data class Address(
-    val addressName: String,
-    val addressDescription: String,
-    val default: Boolean = false
-)
+

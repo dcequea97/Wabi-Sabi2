@@ -11,11 +11,15 @@ import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.cequea.wabi_sabi.ui.components.DeliveryTopAppBar
+import com.cequea.wabi_sabi.ui.home.address.AddressScreen
 import com.cequea.wabi_sabi.ui.home.feed.FeedScreen
 import com.cequea.wabi_sabi.ui.home.cart.CartScreen
 import com.cequea.wabi_sabi.ui.home.checkout.CheckoutScreen
@@ -34,11 +38,17 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 @Composable
 fun HomeScreen(
     email: String,
-    password: String
+    password: String,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val navControllerHome = rememberAnimatedNavController()
+
+    viewModel.getDefaultAddress()
+
+    val address by remember(viewModel::address)
+
     Scaffold(
-        topBar = { DeliveryTopAppBar() },
+        topBar = { DeliveryTopAppBar( address = address) },
         content = { paddingValues ->
             BoxWithConstraints(modifier = Modifier.padding(paddingValues)) {
                 AnimatedNavHost(
@@ -55,7 +65,9 @@ fun HomeScreen(
 
                     addCart(navControllerHome)
 
-                    addProfile()
+                    addProfile(navControllerHome)
+
+                    addAddress(navControllerHome)
                 }
             }
         },
@@ -148,19 +160,34 @@ fun NavGraphBuilder.addCheckout(
     composable(
         route = Destinations.Checkout.route
     ) {
-
         CheckoutScreen()
     }
 }
 
 @ExperimentalAnimationApi
-fun NavGraphBuilder.addProfile() {
+fun NavGraphBuilder.addProfile(
+    navController: NavHostController
+) {
     composable(
         route = Destinations.Profile.route
     ) {
         ProfileScreen(
-            onAddressClicked = { TODO() },
-            onRegisterBusinessClicked = { TODO() }
+            onAddressClicked = { navController.navigate(Destinations.Address.route) },
+            onRegisterBusinessClicked = { TODO() },
+            onLogoutClicked = { TODO() }
+        )
+    }
+}
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addAddress(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.Address.route
+    ) {
+        AddressScreen(
+            onAddAddressSuccessfully = { navController.navigateUp() },
+            onBack = {}
         )
     }
 }
