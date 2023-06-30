@@ -53,6 +53,11 @@
     <string name="cart_decrease_error">There was an error and the quantity couldn\'t be decreased. Please try again.</string>
     <string name="label_remove">Remove item</string>
 
+    <string name="confirmation">Confirmacion</string>
+    <string name="purchase_order_confirmation">¿Seguro que desea procesar la orden?</string>
+    <string name="no">No</string>
+    <string name="yes">Si</string>
+
     <!--  Address  -->
     <string name="address_name">Nombre (Casa, Trabajo…)</string>
     <string name="address_detail">Direccion Exacta</string>

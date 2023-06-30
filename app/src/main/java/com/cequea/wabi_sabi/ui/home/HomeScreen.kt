@@ -8,6 +8,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.WorkHistory
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -25,6 +26,7 @@ import com.cequea.wabi_sabi.ui.home.cart.CartScreen
 import com.cequea.wabi_sabi.ui.home.checkout.CheckoutScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.ProductItemScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.RestaurantDetailScreen
+import com.cequea.wabi_sabi.ui.home.order.OrderHistoryScreen
 import com.cequea.wabi_sabi.ui.home.profile.ProfileScreen
 import com.cequea.wabi_sabi.ui.navigations.BottomNavItem
 import com.cequea.wabi_sabi.ui.navigations.BottomNavigationBar
@@ -63,6 +65,8 @@ fun HomeScreen(
 
                     addProductItem(navControllerHome)
 
+                    addHistory(navControllerHome)
+
                     addCart(navControllerHome)
 
                     addProfile(navControllerHome)
@@ -89,6 +93,11 @@ fun HomeScreen(
                         name = "Cart",
                         route = "cart",
                         icon = Icons.Default.ShoppingCart
+                    ),
+                    BottomNavItem(
+                        name = "Orders",
+                        route = "order_history",
+                        icon = Icons.Default.WorkHistory
                     ),
                     BottomNavItem(
                         name = "Profile",
@@ -150,6 +159,17 @@ fun NavGraphBuilder.addCart(
                 )
             }
         )
+    }
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addHistory(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.OrderHistory.route
+    ) {
+        OrderHistoryScreen()
     }
 }
 

@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cequea.wabi_sabi.data.repository.OrderRepository
 import com.cequea.wabi_sabi.ui.model.Product
 import com.cequea.wabi_sabi.data.repository.ProductRepository
 import com.cequea.wabi_sabi.data.repository.datastore.DataStoreRepository
@@ -20,6 +21,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CartViewModel @Inject constructor(
     private val repository: ProductRepository,
+    private val orderRepository: OrderRepository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
 
@@ -35,6 +37,9 @@ class CartViewModel @Inject constructor(
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
+
+    private val _isRegisteredOrderSuccessfully = mutableStateOf(false)
+    val isRegisteredOrderSuccessfully: State<Boolean> = _isRegisteredOrderSuccessfully
 
     fun getCartProducts() {
         viewModelScope.launch {
@@ -127,6 +132,27 @@ class CartViewModel @Inject constructor(
                     }
                     _isLoading.value = false
                 }
+            }
+        }
+    }
+
+    fun saveOrder() {
+        viewModelScope.launch {
+            _isLoading.value = true
+            delay(1000L)
+            dataStoreRepository.getUser().collect { user ->
+                when (val response = orderRepository.saveOrder(user.id)) {
+                    is Resource.Success -> {
+                        _isRegisteredOrderSuccessfully.value = true
+                    }
+
+                    is Resource.Error -> {
+                        _loadError.emit(response.message!!)
+                    }
+
+                    is Resource.Loading -> TODO()
+                }
+                _isLoading.value = false
             }
         }
     }

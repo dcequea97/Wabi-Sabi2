@@ -35,7 +35,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -53,6 +55,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cequea.wabi_sabi.R
 import com.cequea.wabi_sabi.ui.components.CircularIndeterminateProgressBar
+import com.cequea.wabi_sabi.ui.components.ConfirmationDialog
 import com.cequea.wabi_sabi.ui.model.Product
 import com.cequea.wabi_sabi.ui.components.QuantitySelector
 import com.cequea.wabi_sabi.ui.components.WabiSabiDivider
@@ -73,6 +76,10 @@ fun CartScreen(
     viewModel: CartViewModel = hiltViewModel()
 ) {
     val isLoading by remember(viewModel::isLoading)
+
+    val isRegisteredOrderSuccessfully by remember(viewModel::isRegisteredOrderSuccessfully)
+
+    var showDialog by remember { mutableStateOf(false) }
 
     // Call getCartProducts() to load the products
     LaunchedEffect(true) {
@@ -97,11 +104,31 @@ fun CartScreen(
         increaseItemCount = viewModel::increaseItemCount,
         decreaseItemCount = viewModel::decreaseItemCount,
         onProductClick = onProductClick,
-        onProceedToCheckoutClick = onProceedToCheckoutClick,
+        onProceedToCheckoutClick = {
+            showDialog = true
+        },
         modifier = modifier
     )
 
+    if (showDialog) {
+        ConfirmationDialog(
+            title = context.getString(R.string.confirmation),
+            message = context.getString(R.string.purchase_order_confirmation),
+            confirmText = context.getString(R.string.yes),
+            cancelText = context.getString(R.string.no),
+            onConfirm = {
+                viewModel.saveOrder()
+                showDialog = false
+            },
+            onCancel = { showDialog = false }
+        )
+    }
+
     CircularIndeterminateProgressBar(isDisplayed = isLoading)
+
+    if (isRegisteredOrderSuccessfully) {
+        Toast.makeText(context, "Orden registrada satisfactoriamente", Toast.LENGTH_SHORT).show()
+    }
 }
 
 @Composable
@@ -445,8 +472,8 @@ fun SummaryItem(
 @Composable
 private fun CheckoutBar(
     onProceedToCheckoutClick: () -> Unit,
-    modifier: Modifier = Modifier)
-{
+    modifier: Modifier = Modifier
+) {
     Column(
         modifier.background(
             WabiSabiTheme.colors.uiBackground.copy(alpha = AlphaNearOpaque)

@@ -25,6 +25,8 @@ sealed class Destinations(
 
     object Search: Destinations("search", emptyList())
 
+    object OrderHistory: Destinations("order_history", emptyList())
+
     object Cart: Destinations("cart", emptyList())
 
     object Profile: Destinations("profile", emptyList())
