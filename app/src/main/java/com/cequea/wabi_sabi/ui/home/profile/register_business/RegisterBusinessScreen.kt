@@ -1,4 +1,4 @@
-package com.cequea.wabi_sabi.ui.home.address
+package com.cequea.wabi_sabi.ui.home.profile.register_business
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -41,28 +40,29 @@ import com.cequea.wabi_sabi.core.isNullOrEmpty
 import com.cequea.wabi_sabi.ui.components.CircularIndeterminateProgressBar
 import com.cequea.wabi_sabi.ui.components.RoundedButton
 import com.cequea.wabi_sabi.ui.components.TransparentTextField
-import com.cequea.wabi_sabi.ui.model.Address
+import com.cequea.wabi_sabi.ui.model.RegisterBusiness
 import com.cequea.wabi_sabi.ui.theme.WabiSabiTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 @Composable
-fun AddressScreen(
-    onAddAddressSuccessfully: () -> Unit,
+fun RegisterBusinessScreen(
+    onRegisterSuccessfully: () -> Unit,
     onBack: () -> Unit,
-    viewModel: AddressViewModel = hiltViewModel()
+    viewModel: RegisterBusinessViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
-    val addressNameValue = remember { mutableStateOf("") }
-    val addressDetailValue = remember { mutableStateOf("") }
-    val stateValue = remember { mutableStateOf("") }
-    val cityValue = remember { mutableStateOf("") }
-    val referencePointValue = remember { mutableStateOf("") }
-    val defaultAddressValue = remember { mutableStateOf(false) }
+    val nameValue = remember { mutableStateOf("") }
+    val backgroundImageUrlValue = remember { mutableStateOf("") }
+    val profileImageUrlValue = remember { mutableStateOf("") }
+    val taglineValue = remember { mutableStateOf("") }
+    val workingDaysValue = remember { mutableStateOf(listOf(1, 2, 3, 4, 5)) }
+    val openingHoursValue = remember { mutableStateOf("") }
+    val closingHoursValue = remember { mutableStateOf("") }
 
     val isLoading by remember(viewModel::isLoading)
 
-    val registerAddressSuccessfully by viewModel.registerAddressSuccessfully.observeAsState(false)
+    val registerSuccessfully by viewModel.registerSuccessfully.observeAsState(false)
 
     val focusManager = LocalFocusManager.current
 
@@ -76,12 +76,11 @@ fun AddressScreen(
         }
     }
 
-    LaunchedEffect(registerAddressSuccessfully) {
-        if (registerAddressSuccessfully) {
-            onAddAddressSuccessfully()
+    LaunchedEffect(registerSuccessfully) {
+        if (registerSuccessfully) {
+            onRegisterSuccessfully()
         }
     }
-
 
     Box(
         modifier = Modifier.fillMaxWidth()
@@ -107,7 +106,7 @@ fun AddressScreen(
                 }
 
                 Text(
-                    text = context.getString(R.string.add_address),
+                    text = context.getString(R.string.register_business),
                     style = MaterialTheme.typography.h5.copy(
                         color = MaterialTheme.colors.primary
                     )
@@ -121,8 +120,8 @@ fun AddressScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 TransparentTextField(
-                    textFieldValue = addressNameValue,
-                    textLabel = context.getString(R.string.address_name),
+                    textFieldValue = nameValue,
+                    textLabel = context.getString(R.string.business_name),
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -133,8 +132,8 @@ fun AddressScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = addressDetailValue,
-                    textLabel = context.getString(R.string.address_detail),
+                    textFieldValue = backgroundImageUrlValue,
+                    textLabel = context.getString(R.string.background_image_url),
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -143,8 +142,8 @@ fun AddressScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = stateValue,
-                    textLabel = context.getString(R.string.state),
+                    textFieldValue = profileImageUrlValue,
+                    textLabel = context.getString(R.string.profile_image_url),
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -153,8 +152,23 @@ fun AddressScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = cityValue,
-                    textLabel = context.getString(R.string.city),
+                    textFieldValue = taglineValue,
+                    textLabel = context.getString(R.string.tagline),
+                    keyboardType = KeyboardType.Text,
+                    keyboardActions = KeyboardActions(
+                        onNext = { focusManager.moveFocus(FocusDirection.Down) }
+                    ),
+                    imeAction = ImeAction.Next
+                )
+
+                WorkingDaysPicker(
+                    workingDaysValue = workingDaysValue,
+                    onWorkingDaysChanged = { workingDaysValue.value = it }
+                )
+
+                TransparentTextField(
+                    textFieldValue = openingHoursValue,
+                    textLabel = context.getString(R.string.opening_hours),
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -163,8 +177,8 @@ fun AddressScreen(
                 )
 
                 TransparentTextField(
-                    textFieldValue = referencePointValue,
-                    textLabel = context.getString(R.string.reference_point),
+                    textFieldValue = closingHoursValue,
+                    textLabel = context.getString(R.string.closing_hours),
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.clearFocus() }
@@ -172,36 +186,22 @@ fun AddressScreen(
                     imeAction = ImeAction.Done
                 )
 
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Checkbox(
-                        checked = defaultAddressValue.value,
-                        onCheckedChange = { defaultAddressValue.value = it }
-                    )
-
-                    Text(
-                        text = "Set as Default Address"
-                    )
-                }
-
                 Spacer(modifier = Modifier.height(16.dp))
 
                 RoundedButton(
-                    text = "Add Address",
+                    text = "Enviar Solicitud",
                     onClick = {
-                        val address = Address(
+                        val business = RegisterBusiness(
                             id = null,
-                            addressName = addressNameValue.value,
-                            addressDetail = addressDetailValue.value,
-                            state = stateValue.value,
-                            city = cityValue.value,
-                            referencePoint = referencePointValue.value,
-                            default = defaultAddressValue.value
+                            name = nameValue.value,
+                            backgroundImageUrl = backgroundImageUrlValue.value,
+                            profileImageUrl = profileImageUrlValue.value,
+                            tagline = taglineValue.value,
+                            workingDays = workingDaysValue.value,
+                            openingHours = openingHoursValue.value,
+                            closingHours = closingHoursValue.value
                         )
-                        viewModel.addAddress(address)
+                        viewModel.registerBusiness(business)
                     }
                 )
             }
@@ -215,8 +215,8 @@ fun AddressScreen(
 @Composable
 fun PreviewAddressScreen() {
     WabiSabiTheme {
-        AddressScreen(
-            onAddAddressSuccessfully = {
+        RegisterBusinessScreen(
+            onRegisterSuccessfully = {
                 // Handle adding the new address
             },
             onBack = {}

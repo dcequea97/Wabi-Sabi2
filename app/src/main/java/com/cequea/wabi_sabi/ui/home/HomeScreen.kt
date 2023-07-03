@@ -20,7 +20,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.cequea.wabi_sabi.ui.components.DeliveryTopAppBar
-import com.cequea.wabi_sabi.ui.home.address.AddressScreen
+import com.cequea.wabi_sabi.ui.home.profile.address.AddressScreen
 import com.cequea.wabi_sabi.ui.home.feed.FeedScreen
 import com.cequea.wabi_sabi.ui.home.cart.CartScreen
 import com.cequea.wabi_sabi.ui.home.checkout.CheckoutScreen
@@ -28,6 +28,7 @@ import com.cequea.wabi_sabi.ui.home.feed.details.ProductItemScreen
 import com.cequea.wabi_sabi.ui.home.feed.details.RestaurantDetailScreen
 import com.cequea.wabi_sabi.ui.home.order.OrderHistoryScreen
 import com.cequea.wabi_sabi.ui.home.profile.ProfileScreen
+import com.cequea.wabi_sabi.ui.home.profile.register_business.RegisterBusinessScreen
 import com.cequea.wabi_sabi.ui.navigations.BottomNavItem
 import com.cequea.wabi_sabi.ui.navigations.BottomNavigationBar
 import com.cequea.wabi_sabi.ui.navigations.Destinations
@@ -72,6 +73,8 @@ fun HomeScreen(
                     addProfile(navControllerHome)
 
                     addAddress(navControllerHome)
+
+                    addRegisterBusiness(navControllerHome)
                 }
             }
         },
@@ -193,7 +196,7 @@ fun NavGraphBuilder.addProfile(
     ) {
         ProfileScreen(
             onAddressClicked = { navController.navigate(Destinations.Address.route) },
-            onRegisterBusinessClicked = { TODO() },
+            onRegisterBusinessClicked = { navController.navigate(Destinations.RegisterBusiness.route) },
             onLogoutClicked = { TODO() }
         )
     }
@@ -207,6 +210,20 @@ fun NavGraphBuilder.addAddress(
     ) {
         AddressScreen(
             onAddAddressSuccessfully = { navController.navigateUp() },
+            onBack = {}
+        )
+    }
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addRegisterBusiness(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.RegisterBusiness.route
+    ) {
+        RegisterBusinessScreen(
+            onRegisterSuccessfully = { navController.navigateUp() },
             onBack = {}
         )
     }

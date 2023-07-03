@@ -66,6 +66,14 @@
     <string name="city">Ciudad</string>
     <string name="reference_point">Punto de Referencia</string>
 
+    <!--  Business  -->
+    <string name="business_name">Nombre del Restaurante</string>
+    <string name="background_image_url">Url Imagen de Fondo</string>
+    <string name="profile_image_url">Url Imagen de Perfil</string>
+    <string name="tagline">Descripcion del Restaurante</string>
+    <string name="opening_hours">Hora de apertura (hh:mm)</string>
+    <string name="closing_hours">Hora de cierre (hh:mm)</string>
+
 
 
     <!--  Profile  -->

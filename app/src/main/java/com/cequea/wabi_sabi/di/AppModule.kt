@@ -3,6 +3,7 @@ package com.cequea.wabi_sabi.di
 import com.cequea.wabi_sabi.data.network.apiclients.AddressApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.OrderApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.ProductApiClient
+import com.cequea.wabi_sabi.data.network.apiclients.RegisterBusinessApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.RestaurantApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.UserApiClient
 import com.cequea.wabi_sabi.util.Interceptor
@@ -23,7 +24,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit {
-        val myIp = "192.168.0.102"
+        val myIp = "192.168.250.6"
         return Retrofit.Builder()
             .baseUrl("http://$myIp:5000/api/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -68,5 +69,11 @@ object AppModule {
     @Provides
     fun provideOrderApiClient(retrofit: Retrofit): OrderApiClient {
         return retrofit.create(OrderApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRegisterBusinessApiClient(retrofit: Retrofit): RegisterBusinessApiClient {
+        return retrofit.create(RegisterBusinessApiClient::class.java)
     }
 }

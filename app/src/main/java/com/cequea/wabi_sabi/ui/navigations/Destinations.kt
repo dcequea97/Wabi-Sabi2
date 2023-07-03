@@ -33,6 +33,8 @@ sealed class Destinations(
 
     object Address: Destinations("address", emptyList())
 
+    object RegisterBusiness: Destinations("register_business", emptyList())
+
     object RestaurantDetail: Destinations("restaurant_detail", listOf(
         navArgument("restaurantId"){ type = NavType.LongType },
     ))
