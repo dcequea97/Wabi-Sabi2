@@ -16,9 +16,14 @@ class OrderRepository @Inject constructor(
     private val api: OrderService,
     @ApplicationContext private val context: Context
 ) {
-    suspend fun saveOrder(idUser: Long): Resource<OrderResponse> {
-        val response = api.saveOrder(idUser)
-        if (response.isNullOrEmpty()){
+    suspend fun saveOrder(
+        idUser: Long,
+        bank: String,
+        phoneNumber: String,
+        referenceNumber: String
+    ): Resource<OrderResponse> {
+        val response = api.saveOrder(idUser, bank, phoneNumber, referenceNumber)
+        if (response.isNullOrEmpty()) {
             return Resource.Error(
                 message = context.getString(R.string.universal_error)
             )
@@ -30,7 +35,7 @@ class OrderRepository @Inject constructor(
 
     suspend fun getOrdersByUser(idUser: Long): Resource<List<Order>> {
         val response = api.getOrdersByUser(idUser)
-        if (response.isNull()){
+        if (response.isNull()) {
             return Resource.Error(
                 message = context.getString(R.string.universal_error)
             )

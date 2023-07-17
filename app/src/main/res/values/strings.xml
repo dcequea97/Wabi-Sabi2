@@ -57,6 +57,7 @@
     <string name="purchase_order_confirmation">¿Seguro que desea procesar la orden?</string>
     <string name="no">No</string>
     <string name="yes">Si</string>
+    <string name="confirm_transfer">Confirmar Transferencia</string>
 
     <!--  Address  -->
     <string name="address_name">Nombre (Casa, Trabajo…)</string>

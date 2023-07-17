@@ -4,6 +4,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.cequea.wabi_sabi.data.repository.DollarRepository
 import com.cequea.wabi_sabi.data.repository.OrderRepository
 import com.cequea.wabi_sabi.ui.model.Product
 import com.cequea.wabi_sabi.data.repository.ProductRepository
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     private val repository: ProductRepository,
     private val orderRepository: OrderRepository,
+    private val dollarRepository: DollarRepository,
     private val dataStoreRepository: DataStoreRepository
 ) : ViewModel() {
 
@@ -32,6 +34,12 @@ class CartViewModel @Inject constructor(
         )
     val products = _products.asStateFlow()
 
+    private val _dollarPrice: MutableStateFlow<Double> =
+        MutableStateFlow(
+            0.0
+        )
+    val dollarPrice = _dollarPrice.asStateFlow()
+
     private val _loadError = MutableSharedFlow<String>()
     val loadError = _loadError.asSharedFlow()
 
@@ -41,6 +49,22 @@ class CartViewModel @Inject constructor(
     private val _isRegisteredOrderSuccessfully = mutableStateOf(false)
     val isRegisteredOrderSuccessfully: State<Boolean> = _isRegisteredOrderSuccessfully
 
+    fun getDollarPrice(){
+        viewModelScope.launch {
+
+            when (val response = dollarRepository.getDollarPrice()) {
+                is Resource.Success -> {
+                    _dollarPrice.value = response.data!!
+                }
+
+                is Resource.Error -> {
+                    _loadError.emit(response.message!!)
+                }
+
+                is Resource.Loading -> TODO()
+            }
+        }
+    }
     fun getCartProducts() {
         viewModelScope.launch {
             _isLoading.value = true
@@ -136,12 +160,16 @@ class CartViewModel @Inject constructor(
         }
     }
 
-    fun saveOrder() {
+    fun saveOrder(
+        bank: String,
+        phoneNumber: String,
+        referenceNumber: String,
+    ) {
         viewModelScope.launch {
             _isLoading.value = true
             delay(1000L)
             dataStoreRepository.getUser().collect { user ->
-                when (val response = orderRepository.saveOrder(user.id)) {
+                when (val response = orderRepository.saveOrder(user.id, bank, phoneNumber, referenceNumber)) {
                     is Resource.Success -> {
                         _isRegisteredOrderSuccessfully.value = true
                     }

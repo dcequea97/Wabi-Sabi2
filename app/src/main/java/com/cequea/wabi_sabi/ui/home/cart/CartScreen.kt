@@ -37,6 +37,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -81,12 +82,18 @@ fun CartScreen(
 
     var showDialog by remember { mutableStateOf(false) }
 
+    val bankValue = rememberSaveable{ mutableStateOf("") }
+    val phoneValue = rememberSaveable{ mutableStateOf("") }
+    val referenceValue = rememberSaveable{ mutableStateOf("") }
+
     // Call getCartProducts() to load the products
     LaunchedEffect(true) {
         viewModel.getCartProducts()
+        viewModel.getDollarPrice()
     }
 
     val products by viewModel.products.collectAsState()
+    val dollarPrice by viewModel.dollarPrice.collectAsState()
 
     val context = LocalContext.current
 
@@ -113,14 +120,19 @@ fun CartScreen(
     if (showDialog) {
         ConfirmationDialog(
             title = context.getString(R.string.confirmation),
-            message = context.getString(R.string.purchase_order_confirmation),
-            confirmText = context.getString(R.string.yes),
+            message =
+            context.getString(R.string.purchase_order_confirmation),
+            confirmText = context.getString(R.string.confirm_transfer),
             cancelText = context.getString(R.string.no),
-            onConfirm = {
-                viewModel.saveOrder()
+            onConfirm = { bank, phoneNumber, referenceNumber ->
+                viewModel.saveOrder(bank, phoneNumber, referenceNumber)
                 showDialog = false
             },
-            onCancel = { showDialog = false }
+            onCancel = { showDialog = false },
+            price = dollarPrice,
+            bankValue,
+            phoneValue,
+            referenceValue
         )
     }
 

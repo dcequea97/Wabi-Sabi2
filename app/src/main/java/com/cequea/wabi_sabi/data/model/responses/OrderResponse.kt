@@ -17,7 +17,10 @@ data class OrderResponse(
     @SerializedName("restaurant_id") val restaurantId: Int,
     @SerializedName("status") val status: OrderResponseStatus,
     @SerializedName("total_price") val totalPrice: String,
-    @SerializedName("user_id") val userId: Int
+    @SerializedName("user_id") val userId: Int,
+    @SerializedName("bank") val bank: String,
+    @SerializedName("phone_number") val phoneNumber: String,
+    @SerializedName("reference_number") val referenceNumber: String
 )
 
 fun OrderResponse.toDomain() = Order(
@@ -30,7 +33,10 @@ fun OrderResponse.toDomain() = Order(
     paymentMethod = paymentMethod,
     contactNumber = contactNumber,
     address = address,
-    products = products.map{ it.toDomain() }
+    products = products.map{ it.toDomain() },
+    bank = bank,
+    phoneNumber = phoneNumber,
+    referenceNumber =  referenceNumber
 )
 
 data class OrderResponseProduct(

@@ -10,7 +10,10 @@ data class Order(
     val paymentMethod: String?,
     val contactNumber: String,
     val address: String,
-    val products: List<OrderProduct>
+    val products: List<OrderProduct>,
+    val bank: String,
+    val referenceNumber: String,
+    val phoneNumber: String
 )
 
 data class OrderProduct(

@@ -18,12 +18,21 @@ class OrderService @Inject constructor(
     private val safeApiCall: SafeApiCall
 ) {
 
-    suspend fun saveOrder(idUser: Long, paymentMethod: String = "WhatsApp"): OrderResponse? {
+    suspend fun saveOrder(
+        idUser: Long,
+        bank: String,
+        phoneNumber: String,
+        referenceNumber: String,
+        paymentMethod: String = "WhatsApp"
+    ): OrderResponse? {
         return withContext(Dispatchers.IO) {
             val apiCall = safeApiCall.safeCall {
                 val jsonObject = JsonObject()
                 jsonObject.addProperty("user_id", idUser)
                 jsonObject.addProperty("payment_method", paymentMethod)
+                jsonObject.addProperty("bank", bank)
+                jsonObject.addProperty("phone_number", phoneNumber)
+                jsonObject.addProperty("reference_number", referenceNumber)
                 api.saveOrder(jsonObject)
             }
             return@withContext if (apiCall.failed || !apiCall.isSuccessful) {
