@@ -16,7 +16,8 @@ data class Restaurant(
     val openingHours: LocalTime,
     val closingHours: LocalTime,
     val isFavorite: Boolean = false,
-    val isHighlight: Boolean = false
+    val isHighlight: Boolean = false,
+    val status: Boolean
 )
 
 data class RestaurantsCollection(

@@ -32,7 +32,8 @@ class RestaurantDetailViewModel @Inject constructor(
                 workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
                 rating = 4.7,
                 openingHours = LocalTime.of(0, 0),
-                closingHours = LocalTime.of(0, 0)
+                closingHours = LocalTime.of(0, 0),
+                status = true
             )
         )
     val restaurant = _restaurant.asStateFlow()

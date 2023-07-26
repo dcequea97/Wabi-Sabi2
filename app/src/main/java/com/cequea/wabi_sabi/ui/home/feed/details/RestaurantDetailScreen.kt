@@ -26,6 +26,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Checkbox
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
@@ -94,6 +95,7 @@ fun RestaurantDetailScreen(
     restaurantId: Long,
     onProductClick: (Long) -> Unit,
     upPress: () -> Unit,
+    isProvider: Boolean = false,
     viewModel: RestaurantDetailViewModel = hiltViewModel()
 ) {
     viewModel.getRestaurantById(restaurantId)
@@ -314,8 +316,11 @@ fun ProductImageItem(
 private fun Title(restaurant: Restaurant, scrollProvider: () -> Int) {
     val maxOffset = with(LocalDensity.current) { MaxTitleOffset.toPx() }
     val minOffset = with(LocalDensity.current) { MinTitleOffset.toPx() }
+    val statusValue = remember { mutableStateOf(restaurant.status) }
 
-    Column(
+    val previousStatus = restaurant.status
+
+        Column(
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
             .heightIn(min = TitleHeight)
@@ -334,7 +339,20 @@ private fun Title(restaurant: Restaurant, scrollProvider: () -> Int) {
             color = WabiSabiTheme.colors.textSecondary,
             modifier = HzPadding
         )
-        RatingComposable(restaurant = restaurant, HzPadding)
+        Row(
+            horizontalArrangement = Arrangement.Start,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Checkbox(
+                checked = statusValue.value,
+                onCheckedChange = { statusValue.value = it }
+            )
+
+            Text(
+                text = "Abierto"
+            )
+        }
 
         Spacer(Modifier.height(8.dp))
         WabiSabiDivider()

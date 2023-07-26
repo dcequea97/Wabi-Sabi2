@@ -19,5 +19,6 @@ data class Product(
     val openingDays: Set<DayOfWeek>,
     val productsQuantity: Int,
     val quantity: Int,
-    val quantityFreeze: Int
+    val quantityFreeze: Int,
+    val status: Boolean
 )

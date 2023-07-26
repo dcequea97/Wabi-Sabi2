@@ -361,7 +361,8 @@ fun RestaurantCardPreview() {
             workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
             rating = 4.7,
             openingHours = LocalTime.of(6, 0),
-            closingHours = LocalTime.of(20, 0)
+            closingHours = LocalTime.of(20, 0),
+            status = true
         )
         HighlightRestaurantItem(
             restaurant = restaurant,
@@ -391,7 +392,8 @@ fun RestaurantCollectionCardPreview() {
             workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
             rating = 4.7,
             openingHours = LocalTime.of(6, 0),
-            closingHours = LocalTime.of(20, 0)
+            closingHours = LocalTime.of(20, 0),
+            status = true
         )
 
         val muralla = Restaurant(
@@ -403,7 +405,8 @@ fun RestaurantCollectionCardPreview() {
             workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
             rating = 4.2,
             openingHours = LocalTime.of(7, 0),
-            closingHours = LocalTime.of(19, 0)
+            closingHours = LocalTime.of(19, 0),
+            status = true
         )
 
         val another = Restaurant(
@@ -414,7 +417,8 @@ fun RestaurantCollectionCardPreview() {
             workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
             rating = 4.0,
             openingHours = LocalTime.of(5, 0),
-            closingHours = LocalTime.of(21, 0)
+            closingHours = LocalTime.of(21, 0),
+            status = true
         )
 
         RestaurantCollectionItems(

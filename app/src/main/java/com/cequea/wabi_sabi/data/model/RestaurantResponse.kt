@@ -20,7 +20,8 @@ data class RestaurantModel(
     @SerializedName("opening_hours") private val openingHoursStr: String?,
     @SerializedName("closing_hours") private val closingHoursStr: String?,
     @SerializedName("is_favorite") val isFavorite: Boolean = false,
-    @SerializedName("is_highlight") val isHighlight: Boolean = false
+    @SerializedName("is_highlight") val isHighlight: Boolean = false,
+    @SerializedName("status") val status: Boolean = false
 ) {
     val openingHours: LocalTime
         get() = openingHoursStr?.let {
@@ -45,6 +46,7 @@ fun RestaurantModel.toDomain(): Restaurant {
         openingHours = openingHours,
         closingHours = closingHours,
         isFavorite = isFavorite,
-        isHighlight = isHighlight
+        isHighlight = isHighlight,
+        status = status
     )
 }

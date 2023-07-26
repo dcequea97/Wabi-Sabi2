@@ -39,4 +39,10 @@ interface ProductApiClient {
         @Body cart: JsonObject
     ): Response<ProductModel>
 
+    @PUT("products/{idProduct}")
+    suspend fun updateProduct(
+        @Path("idProduct") idProduct: Long,
+        @Body product: JsonObject
+    ): Response<ProductModel>
+
 }

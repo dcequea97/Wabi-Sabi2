@@ -26,6 +26,7 @@ fun TransparentTextField(
     keyboardType: KeyboardType,
     keyboardActions: KeyboardActions,
     imeAction: ImeAction,
+    enabled: Boolean = true,
     trailingIcon: @Composable() (() -> Unit)? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
@@ -33,6 +34,7 @@ fun TransparentTextField(
         modifier = modifier.fillMaxWidth(),
         value = textFieldValue.value.take(maxChar ?: 40),
         onValueChange = { textFieldValue.value = it },
+        enabled = enabled,
         label = {
             Text(text = textLabel, color = MaterialTheme.colors.onPrimary )
         },

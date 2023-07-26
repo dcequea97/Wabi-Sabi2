@@ -97,6 +97,18 @@ class ProductRepository @Inject constructor(
         )
     }
 
+    suspend fun updateProduct(product: Product): Resource<Product>{
+        val response = api.updateProduct(product)
+        if (response.isNull()){
+            return Resource.Error(
+                message = context.getString(R.string.universal_error)
+            )
+        }
+        return Resource.Success(
+            response!!
+        )
+    }
+
 }
 
 

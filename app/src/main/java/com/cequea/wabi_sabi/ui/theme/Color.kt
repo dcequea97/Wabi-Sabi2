@@ -117,7 +117,7 @@ val originalWabiSabi3 = wabiSabiPrincipal3
 val darkWabiSabi3 = wabiSabiPrincipal3.copy(0.6f)
 val darkerWabiSabi3 = wabiSabiPrincipal3.copy(0.5f)
 
-val wabiSabiSecondary = Color(0xFF00CAF5)
+val wabiSabiSecondary = Color(0xff52c41a)
 val lighterWabiSabiSecondary = wabiSabiSecondary.copy(0.9f)
 val lightWabiSabiSecondary = wabiSabiSecondary.copy(0.8f)
 val originalWabiSabiSecondary = wabiSabiSecondary
