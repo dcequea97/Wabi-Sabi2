@@ -47,6 +47,18 @@ class RestaurantRepository @Inject constructor(
         )
     }
 
+    suspend fun getRestaurantByIdUser(idUser: Long): Resource<Restaurant> {
+        val response = api.getRestaurantByIdUser(idUser)
+        if (response.isNullOrEmpty()) {
+            return Resource.Error(
+                message = context.getString(R.string.universal_error)
+            )
+        }
+        return Resource.Success(
+            response!!
+        )
+    }
+
     suspend fun getRestaurantById(idRestaurant: Long): Resource<Restaurant> {
         val response = api.getRestaurantById(idRestaurant)
         if (response.isNull()){

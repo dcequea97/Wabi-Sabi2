@@ -44,4 +44,30 @@ sealed class Destinations(
     ))
 
     object Checkout: Destinations("checkout", emptyList())
+
+    //For Admin
+    object HomeAdmin: Destinations(
+        "home_admin",
+        listOf(
+            navArgument("email"){ type = NavType.StringType },
+            navArgument("password"){ type = NavType.StringType }
+        )
+    )
+
+    object HomeProvider: Destinations(
+        "home_provider",
+        listOf(
+            navArgument("email"){ type = NavType.StringType },
+            navArgument("password"){ type = NavType.StringType }
+        )
+    )
+
+    object RestaurantRequest: Destinations("restaurant_request", emptyList())
+
+    object IntermediateFeedProvider: Destinations("intermediate_feed_provider", emptyList())
+
+    object EditProduct: Destinations("edit_product", listOf(
+        navArgument("idProduct"){ type = NavType.LongType },
+    ))
+
 }

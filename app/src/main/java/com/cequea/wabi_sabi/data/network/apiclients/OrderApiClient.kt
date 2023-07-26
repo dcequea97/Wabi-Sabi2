@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
  interface OrderApiClient {
@@ -18,5 +19,17 @@ import retrofit2.http.Path
 
     @GET("orders/user/{idUser}")
     suspend fun getOrdersByUser(@Path("idUser") idUser: Long): Response<OrderListResponse>
+
+     @GET("orders/restaurant/user/{idUser}")
+     suspend fun getOrdersByUserRestaurant(@Path("idUser") idUser: Long): Response<OrderListResponse>
+
+     @GET("orders")
+     suspend fun getAllOrders(): Response<OrderListResponse>
+
+     @PUT("orders/{orderId}")
+     suspend fun changeOrderStatus(
+         @Path("orderId") orderId: Int,
+         @Body orderData: JsonObject
+     ): Response<OrderResponse>
 
 }

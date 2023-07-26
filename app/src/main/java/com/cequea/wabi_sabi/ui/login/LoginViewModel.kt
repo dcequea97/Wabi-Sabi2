@@ -9,8 +9,6 @@ import com.cequea.wabi_sabi.R
 import com.cequea.wabi_sabi.core.isNotNull
 import com.cequea.wabi_sabi.data.repository.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,14 +19,11 @@ class LoginViewModel @Inject constructor(
 ): ViewModel() {
 
     val state: MutableState<LoginState> = mutableStateOf(LoginState())
-
     fun login(email: String, password: String) {
         val errorMessage = if(email.isBlank() || password.isBlank()) {
             R.string.error_input_empty
         } else if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             R.string.error_not_a_valid_email
-        } else if(email != "user@gmail.com" || password != "password"){
-            R.string.error_invalid_credentials
         } else null
 
         errorMessage?.let {
@@ -40,10 +35,15 @@ class LoginViewModel @Inject constructor(
             state.value = state.value.copy(displayProgressBar = true)
             val response = repository.login(email, password)
             if (response.data.isNotNull()){
+                state.value = state.value.copy(idProfile = response.data!!.data.idProfile)
                 state.value = state.value.copy(email = email, password = password)
                 state.value = state.value.copy(successLogin = true)
+                response.data.message?.let {
+                    state.value = state.value.copy(errorMessage = R.string.error_user_or_password)
+                }
+            }else {
+                state.value = state.value.copy(errorMessage = R.string.universal_error)
             }
-            delay(2000)
             state.value = state.value.copy(displayProgressBar = false)
 
         }

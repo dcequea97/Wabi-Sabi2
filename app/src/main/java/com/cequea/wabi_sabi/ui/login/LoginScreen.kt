@@ -63,8 +63,8 @@ fun LoginScreen(
     onDismissDialog: () -> Unit
 ) {
 
-    val emailValue = rememberSaveable{ mutableStateOf("user@gmail.com") }
-    val passwordValue = rememberSaveable{ mutableStateOf("password") }
+    val emailValue = rememberSaveable{ mutableStateOf("cafeconpan@restaurant.com") }
+    val passwordValue = rememberSaveable{ mutableStateOf("cafeconpan") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 
@@ -76,7 +76,8 @@ fun LoginScreen(
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "Login Image",
-            contentScale = ContentScale.Inside
+            contentScale = ContentScale.Inside,
+            modifier = Modifier.fillMaxWidth().background(Color.Cyan)
         )
 
         Box(
@@ -107,14 +108,14 @@ fun LoginScreen(
                         verticalArrangement = Arrangement.SpaceEvenly
                     ){
                         Text(
-                            text = "Welcome Back!",
+                            text = "¡Bienvenido de Vuelta!",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Medium
                             )
                         )
 
                         Text(
-                            text = "Login to your Account",
+                            text = "Iniciar Sesion",
                             style = MaterialTheme.typography.titleMedium.copy(
                                 color = WabiSabiTheme.colors.textPrimary
                             )
@@ -129,7 +130,7 @@ fun LoginScreen(
                         ){
                             TransparentTextField(
                                 textFieldValue = emailValue,
-                                textLabel = "Email",
+                                textLabel = "Correo",
                                 keyboardType = KeyboardType.Email,
                                 keyboardActions = KeyboardActions(
                                     onNext = {
@@ -141,7 +142,7 @@ fun LoginScreen(
 
                             TransparentTextField(
                                 textFieldValue = passwordValue,
-                                textLabel = "Password",
+                                textLabel = "Contraseña",
                                 keyboardType = KeyboardType.Password,
                                 keyboardActions = KeyboardActions(
                                     onDone = {
@@ -174,12 +175,12 @@ fun LoginScreen(
                                 }
                             )
 
-                            Text(
-                                modifier = Modifier.fillMaxWidth(),
-                                text = "Forgot Password?",
-                                style = MaterialTheme.typography.labelSmall,
-                                textAlign = TextAlign.End
-                            )
+//                            Text(
+//                                modifier = Modifier.fillMaxWidth(),
+//                                text = "Forgot Password?",
+//                                style = MaterialTheme.typography.labelSmall,
+//                                textAlign = TextAlign.End
+//                            )
                         }
 
                         Column(
@@ -188,7 +189,7 @@ fun LoginScreen(
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             RoundedButton(
-                                text = "Login",
+                                text = "Iniciar Sesion",
                                 displayProgressBar = state.displayProgressBar,
                                 onClick = {
                                     onLogin(emailValue.value, passwordValue.value)
@@ -197,7 +198,7 @@ fun LoginScreen(
 
                             ClickableText(
                                 text = buildAnnotatedString {
-                                    append("Do not have an Account?")
+                                    append("¿No tienes una cuenta?")
 
                                     withStyle(
                                         style = SpanStyle(
@@ -205,7 +206,7 @@ fun LoginScreen(
                                             fontWeight = FontWeight.Bold
                                         )
                                     ){
-                                        append("Sign up")
+                                        append(" Registrarse")
                                     }
                                 }
                             ){

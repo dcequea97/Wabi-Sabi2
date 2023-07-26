@@ -16,6 +16,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import com.cequea.wabi_sabi.ui.home.HomeScreen
+import com.cequea.wabi_sabi.ui.home_admin.HomeAdminScreen
+import com.cequea.wabi_sabi.ui.home_provider.HomeProviderScreen
 import com.cequea.wabi_sabi.ui.login.LoginScreen
 import com.cequea.wabi_sabi.ui.login.LoginViewModel
 import com.cequea.wabi_sabi.ui.login.RegisterScreen
@@ -47,7 +49,7 @@ class MainActivity : ComponentActivity() {
 
 @ExperimentalAnimationApi
 @Composable
-private fun LoginAndRegister() {
+public fun LoginAndRegister() {
     WabiSabiTheme {
         val navController = rememberAnimatedNavController()
         BoxWithConstraints {
@@ -60,6 +62,10 @@ private fun LoginAndRegister() {
                 addRegister(navController)
 
                 addHome(navController)
+
+                addHomeAdmin(navController)
+
+                addHomeProvider(navController)
             }
         }
     }
@@ -89,6 +95,7 @@ fun NavGraphBuilder.addLogin(
                 animationSpec = tween(500)
             )
         },
+
         popExitTransition = {
             slideOutHorizontally(
                 targetOffsetX = { 1000 },
@@ -99,11 +106,19 @@ fun NavGraphBuilder.addLogin(
         val viewModel: LoginViewModel = hiltViewModel()
         val email = viewModel.state.value.email
         val password = viewModel.state.value.password
+        val userProfile = viewModel.state.value.idProfile
 
         if (viewModel.state.value.successLogin) {
             LaunchedEffect(key1 = Unit) {
+                val routeToGo = if(userProfile == 1L){
+                    Destinations.HomeAdmin.route
+                } else if (userProfile == 2L) {
+                    Destinations.HomeProvider.route
+                } else{
+                    Destinations.Home.route
+                }
                 navController.navigate(
-                    Destinations.Home.route + "/$email" + "/$password"
+                    "$routeToGo/$email/$password"
                 ) {
                     popUpTo(Destinations.Login.route) {
                         inclusive = true
@@ -183,6 +198,37 @@ fun NavGraphBuilder.addHome(
     }
 }
 
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addHomeAdmin(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.HomeAdmin.route + "/{email}" + "/{password}",
+        arguments = Destinations.HomeAdmin.arguments
+    ) { backStackEntry ->
+
+        val email = backStackEntry.arguments?.getString("email") ?: ""
+        val password = backStackEntry.arguments?.getString("password") ?: ""
+
+        HomeAdminScreen(email = email, password = password)
+    }
+}
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addHomeProvider(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.HomeProvider.route + "/{email}" + "/{password}",
+        arguments = Destinations.HomeProvider.arguments
+    ) { backStackEntry ->
+
+        val email = backStackEntry.arguments?.getString("email") ?: ""
+        val password = backStackEntry.arguments?.getString("password") ?: ""
+
+        HomeProviderScreen(email = email, password = password)
+    }
+}
+
 @OptIn(ExperimentalAnimationApi::class)
 @Preview(showBackground = true)
 @Composable
@@ -191,3 +237,4 @@ fun GreetingPreview() {
         LoginAndRegister()
     }
 }
+

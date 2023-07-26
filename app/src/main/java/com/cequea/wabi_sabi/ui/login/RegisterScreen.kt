@@ -74,7 +74,7 @@ fun RegisterScreen(
                 }
 
                 Text(
-                    text = "Create An Account",
+                    text = "Crear Cuenta",
                     style = MaterialTheme.typography.h5.copy(
                         color = MaterialTheme.colors.primary
                     )
@@ -89,7 +89,7 @@ fun RegisterScreen(
             ) {
                 TransparentTextField(
                     textFieldValue = nameValue,
-                    textLabel = "Name",
+                    textLabel = "Nombre",
                     keyboardType = KeyboardType.Text,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -101,7 +101,7 @@ fun RegisterScreen(
 
                 TransparentTextField(
                     textFieldValue = emailValue,
-                    textLabel = "Email",
+                    textLabel = "Correo",
                     keyboardType = KeyboardType.Email,
                     keyboardActions = KeyboardActions(
                         onNext = { focusManager.moveFocus(FocusDirection.Down) }
@@ -111,7 +111,7 @@ fun RegisterScreen(
 
                 TransparentTextField(
                     textFieldValue = phoneValue,
-                    textLabel = "Phone Number",
+                    textLabel = "Numero de Teléfono",
                     maxChar = 10,
                     keyboardType = KeyboardType.Phone,
                     keyboardActions = KeyboardActions(
@@ -122,7 +122,7 @@ fun RegisterScreen(
 
                 TransparentTextField(
                     textFieldValue = passwordValue,
-                    textLabel = "Password",
+                    textLabel = "Contraseña",
                     keyboardType = KeyboardType.Password,
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -147,7 +147,7 @@ fun RegisterScreen(
 
                 TransparentTextField(
                     textFieldValue = confirmPasswordValue,
-                    textLabel = "Confirm Password",
+                    textLabel = "Confirmar Contraseña",
                     keyboardType = KeyboardType.Password,
                     keyboardActions = KeyboardActions(
                         onDone = {
@@ -181,7 +181,7 @@ fun RegisterScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 RoundedButton(
-                    text = "Sign Up",
+                    text = "Registrarse",
                     displayProgressBar = state.displayProgressBar,
                     onClick = {
                         onRegister(
@@ -196,7 +196,7 @@ fun RegisterScreen(
 
                 ClickableText(
                     text = buildAnnotatedString {
-                        append("Already have an account?")
+                        append("¿Ya tienes una cuenta?")
 
                         withStyle(
                             style = SpanStyle(
@@ -204,7 +204,7 @@ fun RegisterScreen(
                                 fontWeight = FontWeight.Bold
                             )
                         ){
-                            append("Log in")
+                            append(" Iniciar Sesión")
                         }
                     },
                     onClick = {

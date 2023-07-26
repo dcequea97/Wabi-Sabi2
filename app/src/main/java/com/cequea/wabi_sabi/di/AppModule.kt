@@ -6,6 +6,7 @@ import com.cequea.wabi_sabi.data.network.apiclients.OrderApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.ProductApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.RegisterBusinessApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.RestaurantApiClient
+import com.cequea.wabi_sabi.data.network.apiclients.RestaurantRequestApiClient
 import com.cequea.wabi_sabi.data.network.apiclients.UserApiClient
 import com.cequea.wabi_sabi.util.Interceptor
 import dagger.Module
@@ -13,10 +14,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.Protocol
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
+
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -25,8 +28,9 @@ object AppModule {
     @Singleton
     @Provides
     fun provideRetrofit(): Retrofit {
-        val myUrl = "http://192.168.0.102:5000/api/"
-        //val myUrl = "https://api-wabisabi.onrender.com/api/"
+        //val myUrl = "http://192.168.0.102:5000/api/"
+        // myUrl = "http://192.168.250.6:5000/api/"
+        val myUrl = "https://api-wabisabi.onrender.com/api/"
         return Retrofit.Builder()
             .baseUrl(myUrl)
             .addConverterFactory(GsonConverterFactory.create())
@@ -35,7 +39,10 @@ object AppModule {
     }
 
     private fun getClient(): OkHttpClient {
+        val protocols: MutableList<Protocol> = ArrayList()
+        protocols.add(Protocol.HTTP_1_1)
         return OkHttpClient.Builder()
+            .protocols(protocols)
             .addInterceptor(Interceptor())
             .connectTimeout(1, TimeUnit.MINUTES)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -83,5 +90,11 @@ object AppModule {
     @Provides
     fun provideRegisterBusinessApiClient(retrofit: Retrofit): RegisterBusinessApiClient {
         return retrofit.create(RegisterBusinessApiClient::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideRestaurantRequestApiClient(retrofit: Retrofit): RestaurantRequestApiClient {
+        return retrofit.create(RestaurantRequestApiClient::class.java)
     }
 }

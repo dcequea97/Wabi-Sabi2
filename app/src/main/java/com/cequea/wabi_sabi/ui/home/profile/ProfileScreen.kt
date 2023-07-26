@@ -46,6 +46,7 @@ fun ProfileScreen(
     onAddressClicked: () -> Unit,
     onRegisterBusinessClicked: () -> Unit,
     onLogoutClicked: () -> Unit,
+    isAdminOrProvider: Boolean = false,
     viewModel: ProfileViewModel = hiltViewModel(),
 ) {
     viewModel.getUser()
@@ -60,8 +61,10 @@ fun ProfileScreen(
         item {
             Text(
                 text = stringResource(id = R.string.your_profile),
-                style = MaterialTheme.typography.button,
-                color = MaterialTheme.colors.onBackground,
+                style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.Bold
+                ),
+                color = MaterialTheme.colors.onPrimary,
             )
         }
         /** Header section */
@@ -78,26 +81,30 @@ fun ProfileScreen(
         item {
             Text(
                 text = stringResource(id = R.string.general),
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.h4.copy(
+                    fontWeight = FontWeight.Bold
+                )
             )
         }
-        item {
-            ProfileOptionItem(
-                icon = R.drawable.baseline_map_24,
-                title = R.string.directions,
-                onOptionClicked = {
-                    onAddressClicked()
-                },
-            )
-        }
-        item {
-            ProfileOptionItem(
-                icon = R.drawable.baseline_add_business_24,
-                title = R.string.register_business,
-                onOptionClicked = {
-                    onRegisterBusinessClicked()
-                },
-            )
+        if (!isAdminOrProvider){
+            item {
+                ProfileOptionItem(
+                    icon = R.drawable.baseline_edit_location_24,
+                    title = R.string.directions,
+                    onOptionClicked = {
+                        onAddressClicked()
+                    },
+                )
+            }
+            item {
+                ProfileOptionItem(
+                    icon = R.drawable.baseline_add_business_24,
+                    title = R.string.register_business,
+                    onOptionClicked = {
+                        onRegisterBusinessClicked()
+                    },
+                )
+            }
         }
 
         item {
@@ -125,7 +132,7 @@ fun ProfileOptionItem(icon: Int?, title: Int?, onOptionClicked: () -> Unit) {
         DrawableButton(
             painter = rememberAsyncImagePainter(model = icon),
             backgroundColor = MaterialTheme.colors.primary.copy(alpha = 0.4f),
-            iconTint = MaterialTheme.colors.primary,
+            iconTint = MaterialTheme.colors.onPrimary,
             onButtonClicked = {},
             iconSize = Dimension.smIcon,
             paddingValue = PaddingValues(Dimension.md),
@@ -136,13 +143,13 @@ fun ProfileOptionItem(icon: Int?, title: Int?, onOptionClicked: () -> Unit) {
                 text = stringResource(id = title),
                 style = MaterialTheme.typography.body1,
                 modifier = Modifier.weight(1f),
-                color = MaterialTheme.colors.onBackground.copy(alpha = 0.7f),
+                color = MaterialTheme.colors.onPrimary.copy(alpha = 0.8f),
             )
         }
         IconButton(
             icon = Icons.Rounded.KeyboardArrowRight,
             backgroundColor = MaterialTheme.colors.background,
-            iconTint = MaterialTheme.colors.onBackground,
+            iconTint = MaterialTheme.colors.onPrimary,
             onButtonClicked = {},
             iconSize = Dimension.smIcon,
             paddingValue = PaddingValues(Dimension.md),
@@ -177,12 +184,13 @@ fun ProfileHeaderSection(imageUrl: String?, name: String?, email: String?, phone
         Column {
             Text(
                 text = name ?: "",
-                style = MaterialTheme.typography.h5,
+                style = MaterialTheme.typography.h5.copy(
+                    fontWeight = FontWeight.Bold
+                )
             )
             Text(
                 text = email ?: "",
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colors.onBackground.copy(alpha = 0.7f),
+                style = MaterialTheme.typography.body1
             )
             Text(
                 text = phone ?: "",

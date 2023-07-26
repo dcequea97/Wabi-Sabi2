@@ -25,14 +25,14 @@ class RestaurantDetailViewModel @Inject constructor(
         MutableStateFlow(
             Restaurant(
                 id = 1L,
-                name = "La Panaderia del Pueblo",
-                backgroundImageUrl = "https://ejemplo.com/la-panaderia-del-pueblo-background.jpg",
-                profileImageUrl = "https://ejemplo.com/la-panaderia-del-pueblo-profile.jpg",
-                tagline = "El sabor de casa en cada pan",
+                name = "",
+                backgroundImageUrl = "",
+                profileImageUrl = "",
+                tagline = "",
                 workingDays = setOf(DayOfWeek.MONDAY, DayOfWeek.TUESDAY, DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY, DayOfWeek.FRIDAY, DayOfWeek.SATURDAY, DayOfWeek.SUNDAY),
                 rating = 4.7,
-                openingHours = LocalTime.of(6, 0),
-                closingHours = LocalTime.of(20, 0)
+                openingHours = LocalTime.of(0, 0),
+                closingHours = LocalTime.of(0, 0)
             )
         )
     val restaurant = _restaurant.asStateFlow()

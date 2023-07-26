@@ -60,8 +60,8 @@ import com.cequea.wabi_sabi.ui.utils.getOpeningString
 import java.time.DayOfWeek
 import java.time.LocalTime
 
-private val HighlightCardWidth = 170.dp
-private val HighlightCardPadding = 16.dp
+val HighlightCardWidth = 170.dp
+val HighlightCardPadding = 16.dp
 
 // The Cards show a gradient which spans 3 cards and scrolls with parallax.
 private val gradientWidth

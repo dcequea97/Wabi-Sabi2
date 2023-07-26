@@ -3,6 +3,7 @@ package com.cequea.wabi_sabi.ui.components
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -33,7 +34,7 @@ fun TransparentTextField(
         value = textFieldValue.value.take(maxChar ?: 40),
         onValueChange = { textFieldValue.value = it },
         label = {
-            Text(text = textLabel)
+            Text(text = textLabel, color = MaterialTheme.colors.onPrimary )
         },
         trailingIcon = trailingIcon,
         keyboardOptions = KeyboardOptions(
@@ -44,7 +45,13 @@ fun TransparentTextField(
         keyboardActions = keyboardActions,
         visualTransformation = visualTransformation,
         colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent
+            backgroundColor = Color.Transparent,
+            textColor = MaterialTheme.colors.onPrimary,
+            cursorColor = MaterialTheme.colors.onPrimary,
+            focusedIndicatorColor = MaterialTheme.colors.onPrimary,
+            unfocusedIndicatorColor = MaterialTheme.colors.onPrimary,
+            focusedLabelColor = MaterialTheme.colors.onPrimary,
+            unfocusedLabelColor = MaterialTheme.colors.onPrimary
         )
     )
 }

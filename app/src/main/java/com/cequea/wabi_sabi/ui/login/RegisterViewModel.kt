@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cequea.wabi_sabi.R
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class RegisterViewModel: ViewModel() {
@@ -37,8 +36,6 @@ class RegisterViewModel: ViewModel() {
 
         viewModelScope.launch {
             state.value = state.value.copy(displayProgressBar = true)
-
-            delay(3000)
 
             state.value = state.value.copy(displayProgressBar = false)
         }

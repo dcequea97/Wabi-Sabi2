@@ -86,6 +86,7 @@
 
 
     <string name="universal_error">Ha Ocurrido un Error</string>
+    <string name="error_user_or_password">Usuario o contraseña incorrectos</string>
 
 
 </resources>

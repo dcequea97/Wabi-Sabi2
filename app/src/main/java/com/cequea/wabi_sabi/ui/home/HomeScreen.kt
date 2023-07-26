@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
+import com.cequea.wabi_sabi.LoginAndRegister
 import com.cequea.wabi_sabi.ui.components.DeliveryTopAppBar
 import com.cequea.wabi_sabi.ui.home.profile.address.AddressScreen
 import com.cequea.wabi_sabi.ui.home.feed.FeedScreen
@@ -29,6 +30,7 @@ import com.cequea.wabi_sabi.ui.home.feed.details.RestaurantDetailScreen
 import com.cequea.wabi_sabi.ui.home.order.OrderHistoryScreen
 import com.cequea.wabi_sabi.ui.home.profile.ProfileScreen
 import com.cequea.wabi_sabi.ui.home.profile.register_business.RegisterBusinessScreen
+import com.cequea.wabi_sabi.ui.login.LoginScreen
 import com.cequea.wabi_sabi.ui.navigations.BottomNavItem
 import com.cequea.wabi_sabi.ui.navigations.BottomNavigationBar
 import com.cequea.wabi_sabi.ui.navigations.Destinations
@@ -75,6 +77,8 @@ fun HomeScreen(
                     addAddress(navControllerHome)
 
                     addRegisterBusiness(navControllerHome)
+
+                    addLogin(navControllerHome)
                 }
             }
         },
@@ -87,11 +91,11 @@ fun HomeScreen(
                         route = "feed",
                         icon = Icons.Default.Home
                     ),
-                    BottomNavItem(
-                        name = "Search",
-                        route = "search",
-                        icon = Icons.Default.Search
-                    ),
+//                    BottomNavItem(
+//                        name = "Search",
+//                        route = "search",
+//                        icon = Icons.Default.Search
+//                    ),
                     BottomNavItem(
                         name = "Cart",
                         route = "cart",
@@ -113,6 +117,24 @@ fun HomeScreen(
             )
         }
     )
+}
+
+@ExperimentalAnimationApi
+fun NavGraphBuilder.addLogin(
+    navController: NavHostController
+) {
+    composable(
+        route = Destinations.Login.route
+    ) {
+        navController.navigate(
+            Destinations.Login.route
+        ) {
+            popUpTo(Destinations.Profile.route) {
+                inclusive = true
+            }
+        }
+        LoginAndRegister()
+    }
 }
 
 @ExperimentalAnimationApi
@@ -197,7 +219,7 @@ fun NavGraphBuilder.addProfile(
         ProfileScreen(
             onAddressClicked = { navController.navigate(Destinations.Address.route) },
             onRegisterBusinessClicked = { navController.navigate(Destinations.RegisterBusiness.route) },
-            onLogoutClicked = { TODO() }
+            onLogoutClicked = { navController.navigate(Destinations.Login.route) }
         )
     }
 }
@@ -248,7 +270,7 @@ fun NavGraphBuilder.addRestaurantDetail(
                     route = Destinations.ProductItem.route + "/${id}"
                 )
             },
-            upPress = {}
+            upPress = { navController.popBackStack() }
         )
     }
 }

@@ -11,7 +11,6 @@ import com.cequea.wabi_sabi.data.repository.ProductRepository
 import com.cequea.wabi_sabi.data.repository.datastore.DataStoreRepository
 import com.cequea.wabi_sabi.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -68,7 +67,6 @@ class CartViewModel @Inject constructor(
     fun getCartProducts() {
         viewModelScope.launch {
             _isLoading.value = true
-            delay(2000L)
             dataStoreRepository.getUser().collect { user ->
                 when (val response = repository.getCartProducts(user.id)) {
                     is Resource.Success -> {
@@ -126,7 +124,6 @@ class CartViewModel @Inject constructor(
             } else {
                 _isLoading.value = true
                 dataStoreRepository.getUser().collect { user ->
-                    delay(1000L)
                     when (val response =
                         repository.updateCart(idProduct, user.id, newCountInCart)) {
                         is Resource.Success -> {
@@ -167,7 +164,6 @@ class CartViewModel @Inject constructor(
     ) {
         viewModelScope.launch {
             _isLoading.value = true
-            delay(1000L)
             dataStoreRepository.getUser().collect { user ->
                 when (val response = orderRepository.saveOrder(user.id, bank, phoneNumber, referenceNumber)) {
                     is Resource.Success -> {

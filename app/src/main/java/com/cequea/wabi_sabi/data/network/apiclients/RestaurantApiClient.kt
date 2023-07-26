@@ -14,4 +14,7 @@ interface RestaurantApiClient {
     @GET("restaurants/{idRestaurant}")
     suspend fun getRestaurantById(@Path("idRestaurant") idRestaurant: Long): Response<RestaurantModel>
 
+    @GET("restaurants/user/{idUser}")
+    suspend fun getRestaurantByIdUser(@Path("idUser") idUser: Long): Response<RestaurantModel>
+
 }

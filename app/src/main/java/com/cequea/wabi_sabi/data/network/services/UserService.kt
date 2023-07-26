@@ -44,6 +44,8 @@ class UserService @Inject constructor(
             }
             return@withContext if (apiCall.failed || !apiCall.isSuccessful){
                 null
+            }else if (apiCall.statusCode == 401){
+                null
             }else{
                 apiCall.body
             }

@@ -28,6 +28,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.DeleteForever
@@ -46,6 +47,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.LastBaseline
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -55,6 +57,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.cequea.wabi_sabi.R
+import com.cequea.wabi_sabi.core.isNullOrEmpty
 import com.cequea.wabi_sabi.ui.components.CircularIndeterminateProgressBar
 import com.cequea.wabi_sabi.ui.components.ConfirmationDialog
 import com.cequea.wabi_sabi.ui.model.Product
@@ -105,17 +108,21 @@ fun CartScreen(
         }
     }
 
-    Cart(
-        products = products,
-        removeProduct = viewModel::removeProduct,
-        increaseItemCount = viewModel::increaseItemCount,
-        decreaseItemCount = viewModel::decreaseItemCount,
-        onProductClick = onProductClick,
-        onProceedToCheckoutClick = {
-            showDialog = true
-        },
-        modifier = modifier
-    )
+    if (!products.isNullOrEmpty()){
+        Cart(
+            products = products,
+            removeProduct = viewModel::removeProduct,
+            increaseItemCount = viewModel::increaseItemCount,
+            decreaseItemCount = viewModel::decreaseItemCount,
+            onProductClick = onProductClick,
+            onProceedToCheckoutClick = {
+                showDialog = true
+            },
+            modifier = modifier
+        )
+    }else{
+        EmptyCartMessage()
+    }
 
     if (showDialog) {
         ConfirmationDialog(
@@ -140,6 +147,21 @@ fun CartScreen(
 
     if (isRegisteredOrderSuccessfully) {
         Toast.makeText(context, "Orden registrada satisfactoriamente", Toast.LENGTH_SHORT).show()
+    }
+}
+
+
+@Composable
+fun EmptyCartMessage() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = "El Carrito esta vacio, agregue productos antes de continuar",
+            style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Center
+        )
     }
 }
 
@@ -505,7 +527,10 @@ private fun CheckoutBar(
                     text = stringResource(id = R.string.cart_checkout),
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Left,
-                    maxLines = 1
+                    maxLines = 1,
+                    style = LocalTextStyle.current.copy(
+                        fontWeight = FontWeight.Bold
+                    )
                 )
             }
         }

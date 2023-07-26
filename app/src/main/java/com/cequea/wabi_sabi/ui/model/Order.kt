@@ -26,5 +26,6 @@ data class OrderProduct(
 
 data class OrderStatus(
     val id: Int,
-    val description: String
+    val description: String,
+    val order: Int
 )

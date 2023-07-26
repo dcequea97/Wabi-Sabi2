@@ -21,6 +21,8 @@ fun EventDialog(
     onDismiss: (() -> Unit)? = null
 ) {
     AlertDialog(
+        backgroundColor = Color.White,
+        contentColor = Color.Black,
         modifier = modifier
             .background(Color.White)
             .padding(16.dp),
@@ -29,7 +31,7 @@ fun EventDialog(
             Text(
                 "Error",
                 style = TextStyle(
-                    color = WabiSabiTheme.colors.uiFloated,
+                    color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold
                 )

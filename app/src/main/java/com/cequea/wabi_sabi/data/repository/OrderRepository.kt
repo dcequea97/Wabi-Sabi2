@@ -45,6 +45,45 @@ class OrderRepository @Inject constructor(
         )
     }
 
+    suspend fun getOrdersByUserRestaurant(idUser: Long): Resource<List<Order>> {
+        val response = api.getOrdersByUserRestaurant(idUser)
+        if (response.isNull()) {
+            return Resource.Error(
+                message = context.getString(R.string.universal_error)
+            )
+        }
+        return Resource.Success(
+            response.sortedByDescending { it.status.order }
+        )
+    }
+
+    suspend fun getAllOrders(): Resource<List<Order>> {
+        val response = api.getAllOrders()
+        if (response.isNull()) {
+            return Resource.Error(
+                message = context.getString(R.string.universal_error)
+            )
+        }
+        return Resource.Success(
+            response
+        )
+    }
+
+    suspend fun changeOrderStatus(
+        orderId: Int,
+        statusId: Int
+    ): Resource<OrderResponse> {
+        val response = api.changeOrderStatus(orderId, statusId)
+        if (response.isNullOrEmpty()) {
+            return Resource.Error(
+                message = context.getString(R.string.universal_error)
+            )
+        }
+        return Resource.Success(
+            response!!
+        )
+    }
+
 }
 
 

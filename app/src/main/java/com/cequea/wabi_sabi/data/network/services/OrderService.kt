@@ -56,4 +56,48 @@ class OrderService @Inject constructor(
         }
     }
 
+    suspend fun getOrdersByUserRestaurant(idUser: Long): List<Order> {
+        return withContext(Dispatchers.IO) {
+            val apiCall = safeApiCall.safeCall { api.getOrdersByUserRestaurant(idUser) }
+            return@withContext if (apiCall.failed || !apiCall.isSuccessful) {
+                emptyList()
+            } else {
+                apiCall.body.map {
+                    it.toDomain()
+                }
+            }
+        }
+    }
+
+    suspend fun getAllOrders(): List<Order> {
+        return withContext(Dispatchers.IO) {
+            val apiCall = safeApiCall.safeCall { api.getAllOrders() }
+            return@withContext if (apiCall.failed || !apiCall.isSuccessful) {
+                emptyList()
+            } else {
+                apiCall.body.map {
+                    it.toDomain()
+                }
+            }
+        }
+    }
+
+    suspend fun changeOrderStatus(
+        orderId: Int,
+        statusId: Int
+    ): OrderResponse? {
+        return withContext(Dispatchers.IO) {
+            val apiCall = safeApiCall.safeCall {
+                val jsonObject = JsonObject()
+                jsonObject.addProperty("status_id", statusId)
+                api.changeOrderStatus(orderId, jsonObject)
+            }
+            return@withContext if (apiCall.failed || !apiCall.isSuccessful) {
+                null
+            } else {
+                apiCall.body
+            }
+        }
+    }
+
 }

@@ -37,4 +37,15 @@ class RestaurantService @Inject constructor(
             }
         }
     }
+
+    suspend fun getRestaurantByIdUser(idUser: Long): Restaurant? {
+        return withContext(Dispatchers.IO) {
+            val apiCall = safeApiCall.safeCall { api.getRestaurantByIdUser(idUser) }
+            return@withContext if (apiCall.failed || !apiCall.isSuccessful) {
+                null
+            } else {
+                apiCall.body.toDomain()
+            }
+        }
+    }
 }

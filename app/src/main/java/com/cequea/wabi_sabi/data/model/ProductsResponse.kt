@@ -20,7 +20,9 @@ data class ProductModel(
     @SerializedName("opening_hours")  private val openingHoursStr: String?,
     @SerializedName("closing_hours") private val closingHoursStr: String?,
     @SerializedName("opening_days") val openingDays: ArrayList<Int>,
-    @SerializedName("products_quantity") val productsQuantity: Int
+    @SerializedName("products_quantity") val productsQuantity: Int,
+    @SerializedName("quantity") val quantity: Int,
+    @SerializedName("quantity_freeze") val quantityFreeze: Int
 ){
     val openingHours: LocalTime
         get() = openingHoursStr?.let {
@@ -45,5 +47,7 @@ fun ProductModel.toDomain() = Product(
     openingHours = openingHours,
     closingHours = closingHours,
     openingDays = openingDays.toDayOfWeek(),
-    productsQuantity = productsQuantity
+    productsQuantity = productsQuantity,
+    quantity = quantity,
+    quantityFreeze = quantityFreeze
 )

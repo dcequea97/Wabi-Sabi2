@@ -57,10 +57,12 @@ fun OrderResponseProduct.toDomain() = OrderProduct(
 
 data class OrderResponseStatus(
     @SerializedName("description") val description: String,
-    @SerializedName("id") val id: Int
+    @SerializedName("id") val id: Int,
+    @SerializedName("order") val order: Int
 )
 
 fun OrderResponseStatus.toDomain() = OrderStatus(
     description = description,
-    id = id
+    id = id,
+    order = order
 )
