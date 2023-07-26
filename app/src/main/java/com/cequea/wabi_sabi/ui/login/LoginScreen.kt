@@ -63,8 +63,8 @@ fun LoginScreen(
     onDismissDialog: () -> Unit
 ) {
 
-    val emailValue = rememberSaveable{ mutableStateOf("cafeconpan@restaurant.com") }
-    val passwordValue = rememberSaveable{ mutableStateOf("cafeconpan") }
+    val emailValue = rememberSaveable{ mutableStateOf("") }
+    val passwordValue = rememberSaveable{ mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
 

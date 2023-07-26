@@ -110,7 +110,7 @@ fun RestaurantDetailScreen(
             scroll = scroll,
             onProductClick = onProductClick
         )
-        Title(restaurant) { scroll.value }
+        Title(restaurant, isProvider) { scroll.value }
         Image(restaurant.profileImageUrl) { scroll.value }
         Up(upPress)
         //CartBottomBar(modifier = Modifier.align(Alignment.BottomCenter))
@@ -277,7 +277,14 @@ private fun ProductItem(product: Product, onProductClick: () -> Unit) {
             )
 
             createHorizontalChain(name, image, chainStyle = ChainStyle.SpreadInside)
-            createVerticalChain(name, description, price, quantities, hours, chainStyle = ChainStyle.SpreadInside)
+            createVerticalChain(
+                name,
+                description,
+                price,
+                quantities,
+                hours,
+                chainStyle = ChainStyle.SpreadInside
+            )
         }
     }
 
@@ -313,14 +320,13 @@ fun ProductImageItem(
 }
 
 @Composable
-private fun Title(restaurant: Restaurant, scrollProvider: () -> Int) {
+private fun Title(restaurant: Restaurant, isProvider: Boolean, scrollProvider: () -> Int) {
     val maxOffset = with(LocalDensity.current) { MaxTitleOffset.toPx() }
     val minOffset = with(LocalDensity.current) { MinTitleOffset.toPx() }
     val statusValue = remember { mutableStateOf(restaurant.status) }
 
-    val previousStatus = restaurant.status
 
-        Column(
+    Column(
         verticalArrangement = Arrangement.Bottom,
         modifier = Modifier
             .heightIn(min = TitleHeight)
@@ -339,19 +345,21 @@ private fun Title(restaurant: Restaurant, scrollProvider: () -> Int) {
             color = WabiSabiTheme.colors.textSecondary,
             modifier = HzPadding
         )
-        Row(
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Checkbox(
-                checked = statusValue.value,
-                onCheckedChange = { statusValue.value = it }
-            )
+        if (isProvider){
+            Row(
+                horizontalArrangement = Arrangement.Start,
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Checkbox(
+                    checked = statusValue.value,
+                    onCheckedChange = { statusValue.value = it }
+                )
 
-            Text(
-                text = "Abierto"
-            )
+                Text(
+                    text = "Abierto"
+                )
+            }
         }
 
         Spacer(Modifier.height(8.dp))

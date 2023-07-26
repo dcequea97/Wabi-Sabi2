@@ -114,7 +114,8 @@ fun NavGraphBuilder.addProfile(
         ProfileScreen(
             onAddressClicked = { navController.navigate(Destinations.Address.route) },
             onRegisterBusinessClicked = { navController.navigate(Destinations.RegisterBusiness.route) },
-            onLogoutClicked = { TODO() }
+            onLogoutClicked = { TODO() },
+            isAdminOrProvider = true
         )
     }
 }

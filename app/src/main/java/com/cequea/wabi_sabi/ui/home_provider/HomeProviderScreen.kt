@@ -119,6 +119,7 @@ fun NavGraphBuilder.addRestaurantDetail(
                     route = Destinations.EditProduct.route + "/${id}"
                 )
             },
+            isProvider = true,
             upPress = { navController.popBackStack() }
         )
     }
@@ -166,7 +167,8 @@ fun NavGraphBuilder.addProfile(
         ProfileScreen(
             onAddressClicked = { navController.navigate(Destinations.Address.route) },
             onRegisterBusinessClicked = { navController.navigate(Destinations.RegisterBusiness.route) },
-            onLogoutClicked = { TODO() }
+            onLogoutClicked = { TODO() },
+            isAdminOrProvider = true
         )
     }
 }

@@ -24,7 +24,7 @@ class UserRepository @Inject constructor(
 
     suspend fun getUserByEmail(email: String): Resource<User> {
         val response = api.getUserByEmail(email)
-        if (response.isNull()){
+        if (response.isNull()) {
             return Resource.Error(
                 message = context.getString(R.string.universal_error)
             )
@@ -38,12 +38,34 @@ class UserRepository @Inject constructor(
         val response = api.login(email, password)
         saveToken(response?.token)
         saveUser(response?.data?.toDomain())
-        return if (response.isNullOrEmpty()){
+        return if (response.isNullOrEmpty()) {
             Resource.Error(
                 message = "Ha ocurrido un error",
                 data = null
             )
-        }else{
+        } else {
+            Resource.Success(
+                data = response!!
+            )
+
+        }
+    }
+
+    suspend fun signUp(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        password: String,
+    ): Resource<LoginResponse> {
+        val response = api.login(email, password)
+        saveToken(response?.token)
+        saveUser(response?.data?.toDomain())
+        return if (response.isNullOrEmpty()) {
+            Resource.Error(
+                message = "Ha ocurrido un error",
+                data = null
+            )
+        } else {
             Resource.Success(
                 data = response!!
             )
@@ -56,6 +78,7 @@ class UserRepository @Inject constructor(
             dataStore.saveToken(token!!)
         }
     }
+
     private suspend fun saveUser(user: User?) {
         if (user.isNotNull()) {
             dataStore.saveUser(user!!.toDataStore())

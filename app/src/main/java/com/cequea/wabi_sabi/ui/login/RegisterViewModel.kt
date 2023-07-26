@@ -6,6 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.cequea.wabi_sabi.R
+import com.cequea.wabi_sabi.core.isNotNull
+import com.cequea.wabi_sabi.core.isNull
 import kotlinx.coroutines.launch
 
 class RegisterViewModel: ViewModel() {

@@ -136,7 +136,7 @@ fun CartScreen(
                 showDialog = false
             },
             onCancel = { showDialog = false },
-            price = dollarPrice,
+            price = dollarPrice * ((products.sumOf { it.price * it.countInCart }) + 2.0) ,
             bankValue,
             phoneValue,
             referenceValue
